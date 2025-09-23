@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rean Ramz Lending Corp</title>
+  <link rel="stylesheet" href="../css/login.css">
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+
+</head>
+<body>
+
+  <div class="login-box">
+    <img src="../assets/logo.png" height="150px" width="150px" alt="logo">    
+    <h2>Log In</h2>
+
+    <form method="post" action="../php/login.php">
+      <label>Username</label>
+      <input type="text" id="username" name="username" required>
+      
+      <label>Password</label>
+      <input type="password" name="password" required>
+      
+      <button type="submit">Log In</button>
+    </form>
+
+    <!-- error placeholder -->
+    <p id="error-message" style="color:red; display:none;">Invalid username or password!</p>
+  </div>
+
+  <!-- link to external JavaScript -->
+  <script src="../javascript/login.js"></script>
+</body>
+</html>
