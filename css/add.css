@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #2D4882;
+    color: #CEE0F4;
+    margin: 0;
+    padding: 0;
+  }
+
+.nav-bar {
+    padding: 0px 20px;
+}
+
+.navi {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    margin: 0px 20px;
+    padding: 0;
+}
+
+.logo {
+    height: 100px;
+    width: auto;
+    color: white;
+}
+
+.home {
+    height: 30px;
+    width: auto;
+    cursor: pointer;
+    color: white;
+}
+
+.customer-info{
+    background: #0d1546;
+    border-radius: 15px;
+    margin: 10px auto;
+    padding: 30px 50px;
+    width: 90%;
+}
+
+.data h1{
+    margin: 0;
+}
+
+.input-info{
+    display: flex;
+}
+
+.detail-box{
+    padding: 20px;
+
+}
+
+.detail-box p{
+    padding: 0;
+}
+
+.detail-box input{
+    background: white;
+    width: 200px;
+    height: 10px;
+    border-radius: 9px;
+    border: none;
+    outline: none;
+    padding: 10px;
+}
+
+.loan-info{
+    background: #0d1546;
+    border-radius: 15px;
+    margin: 30px auto;
+    padding: 30px 50px;
+    width: 90%;
+}
+
+.loan-box{
+    padding: 20px;
+}
+
+.loan-box input{
+    background: white;
+    width: 200px;
+    height: 10px;
+    border-radius: 9px;
+    border: none;
+    outline: none;
+    padding: 10px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.add-btn{
+    background: #0d1546;
+    color: #CEE0F4;
+    padding: 20px;
+    margin: 30px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.add-btn:hover{
+    background: #CEE0F4;
+    color: #02020B;
+
+}
