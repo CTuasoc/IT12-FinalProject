@@ -56,6 +56,7 @@ body {
   font-weight: bold;
   text-decoration: none;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 .stats-box a:hover{
   background-color: #779ABF;
@@ -114,6 +115,7 @@ body {
     box-shadow: 0 2px 4px (#02020B);
     transform: scale(1.09);
     color: #02020B;
+    cursor: pointer;
   }
   .service-card img {
     display: block;

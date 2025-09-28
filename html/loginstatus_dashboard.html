@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Dashboard • Rean Ramz Lending Corp</title>
+  <link rel="icon" href="../assets/logo.png" />
+  <link rel="stylesheet" href="../css/loginstatus_dashboard.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="left">
+      <a class="brand" href="admin.html">
+        <img src="../assets/logo.png" alt="Logo" class="logo" />
+        <span class="brand-name">Rean Ramz</span>
+      </a>
+      <div class="search">
+        <input type="text" placeholder="Search..." aria-label="Search" />
+      </div>
+    </div>
+    <div class="right">
+      <div class="status-indicators" title="Sample status only (UI)">
+        <span class="badge online" id="tellerStatus">Teller: Online</span>
+        <span class="badge offline" id="collectorStatus">Collector: Offline</span>
+      </div>
+      <div class="profile">
+        <div class="avatar">AA</div>
+        <div class="meta">
+          <div class="name">Admin Account</div>
+          <div class="role">Admin</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <aside class="sidebar">
+      <button class="tab active" data-tab="members">Members</button>
+      <button class="tab" data-tab="admins">Admins</button>
+      <div class="stats-card">
+        <div class="stats-row">
+          <span>Total members:</span>
+          <strong>2000</strong>
+        </div>
+        <div class="stats-row">
+          <span>Current active:</span>
+          <strong>1600</strong>
+        </div>
+      </div>
+      <button class="filter-btn">Filter</button>
+    </aside>
+
+    <section class="content">
+      <div class="toolbar">
+        <div class="tabs">
+          <button class="chip active" data-tab="members">Members</button>
+          <button class="chip" data-tab="admins">Add new</button>
+        </div>
+        <div class="actions">
+          <button class="btn">Import members</button>
+          <button class="btn">Export members (Excel)</button>
+        </div>
+      </div>
+
+      <div class="table-wrap" id="members">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Photo</th>
+              <th>Member Name</th>
+              <th>Mobile</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Operations</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="avatar sm">GU</div></td>
+              <td>George Umeadi</td>
+              <td>+63 915 123 4567</td>
+              <td>george@example.com</td>
+              <td><span class="badge success">Active</span></td>
+              <td class="ops">
+                <button class="icon" aria-label="view">🔍</button>
+                <button class="icon" aria-label="edit">✏️</button>
+                <button class="icon" aria-label="delete">🗑️</button>
+              </td>
+              <td><button class="btn ghost">Log in</button></td>
+            </tr>
+            <tr>
+              <td><div class="avatar sm">ED</div></td>
+              <td>Eric Dyer</td>
+              <td>+63 917 222 1111</td>
+              <td>eric@example.com</td>
+              <td><span class="badge warning">Pending</span></td>
+              <td class="ops">
+                <button class="icon" aria-label="view">🔍</button>
+                <button class="icon" aria-label="edit">✏️</button>
+                <button class="icon" aria-label="delete">🗑️</button>
+              </td>
+              <td><button class="btn ghost">Log in</button></td>
+            </tr>
+            <tr>
+              <td><div class="avatar sm">AW</div></td>
+              <td>Ashley Williams</td>
+              <td>+63 920 555 9090</td>
+              <td>ashley@example.com</td>
+              <td><span class="badge error">Inactive</span></td>
+              <td class="ops">
+                <button class="icon" aria-label="view">🔍</button>
+                <button class="icon" aria-label="edit">✏️</button>
+                <button class="icon" aria-label="delete">🗑️</button>
+              </td>
+              <td><button class="btn ghost">Log in</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="placeholder" id="admins" hidden>
+        <h2>Admins</h2>
+        <p>UI placeholder for admin list/forms. No functionality wired yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>UI prototype • No backend logic • © Rean Ramz Lending Corp</small>
+  </footer>
+
+  <script src="../js/staff_dashboard.js"></script>
+</body>
+</html>
