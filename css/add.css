@@ -59,12 +59,13 @@ body {
 
 .detail-box input{
     background: white;
-    width: 200px;
-    height: 10px;
+    width: 100%;            
+    box-sizing: border-box; 
     border-radius: 9px;
     border: none;
     outline: none;
     padding: 10px;
+    height: 30px;
 }
 
 .loan-info{
