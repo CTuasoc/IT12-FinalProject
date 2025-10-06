@@ -1,8 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION['user'])) {
+include("config.php");
+
+// Check login and admin
+if (!isset($_SESSION['user']) || $_SESSION['dept'] != 1) {
     header("Location: login.php");
     exit();
 }
+
+// If logged in properly, show the admin page
 include("../html/admin.html");
 ?>

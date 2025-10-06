@@ -24,10 +24,14 @@ CREATE TABLE `tblcustomeracc` (
   `CustomerID` int(11) NOT NULL AUTO_INCREMENT,
   `FirstName` varchar(50) NOT NULL,
   `LastName` varchar(50) NOT NULL,
+  `BusinessName` varchar(50) NOT NULL,
   `Address` varchar(100) DEFAULT NULL,
   `PhoneNum` varchar(15) DEFAULT NULL,
   `LoanAmount` decimal(10,2) DEFAULT NULL,
-  `LoanBalance` decimal(10,2) DEFAULT NULL,
+  `AmountPaid` decimal(10,2) DEFAULT NULL,
+  `DueDate` date DEFAULT NULL,
+  `TotalAmount` decimal(10,2) DEFAULT NULL,
+  `PerDay` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`CustomerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
