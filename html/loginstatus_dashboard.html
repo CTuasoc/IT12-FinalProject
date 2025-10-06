@@ -3,51 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Staff Dashboard • Rean Ramz Lending Corp</title>
+  <title>Rean Ramz Lending Corp</title>
   <link rel="icon" href="../assets/logo.png" />
   <link rel="stylesheet" href="../css/loginstatus_dashboard.css" />
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="left">
-      <a class="brand" href="admin.html">
-        <img src="../assets/logo.png" alt="Logo" class="logo" />
-        <span class="brand-name">Rean Ramz</span>
-      </a>
-      <div class="search">
-        <input type="text" placeholder="Search..." aria-label="Search" />
-      </div>
-    </div>
-    <div class="right">
-      <div class="status-indicators" title="Sample status only (UI)">
-        <span class="badge online" id="tellerStatus">Teller: Online</span>
-        <span class="badge offline" id="collectorStatus">Collector: Offline</span>
-      </div>
-      <div class="profile">
-        <div class="avatar">AA</div>
-        <div class="meta">
-          <div class="name">Admin Account</div>
-          <div class="role">Admin</div>
-        </div>
-      </div>
-    </div>
+  <header>
+    <nav class="nav-bar">
+      <ul class="navi">
+        <li>
+          <a href="admin.html">
+            <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
+          </a>
+        </li>
+        <li>
+          <a href="admin.html">
+            <img class="home" src="../assets/home.svg" alt="Home">
+          </a>
+        </li>
+      </ul>
+    </nav>
   </header>
 
   <main class="container">
     <aside class="sidebar">
-      <button class="tab active" data-tab="members">Members</button>
-      <button class="tab" data-tab="admins">Admins</button>
+      <button class="tab active" data-tab="members">Collectors</button>
+      <button class="tab" data-tab="admins">Office Workers</button>
       <div class="stats-card">
         <div class="stats-row">
           <span>Total members:</span>
-          <strong>2000</strong>
+          <strong>20</strong>
         </div>
         <div class="stats-row">
           <span>Current active:</span>
-          <strong>1600</strong>
+          <strong>16</strong>
         </div>
       </div>
-      <button class="filter-btn">Filter</button>
     </aside>
 
     <section class="content">
@@ -57,8 +49,7 @@
           <button class="chip" data-tab="admins">Add new</button>
         </div>
         <div class="actions">
-          <button class="btn">Import members</button>
-          <button class="btn">Export members (Excel)</button>
+          <input type="text" placeholder="Search" class="search"/>
         </div>
       </div>
 
@@ -72,7 +63,6 @@
               <th>Email</th>
               <th>Status</th>
               <th>Operations</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -87,20 +77,18 @@
                 <button class="icon" aria-label="edit">✏️</button>
                 <button class="icon" aria-label="delete">🗑️</button>
               </td>
-              <td><button class="btn ghost">Log in</button></td>
             </tr>
             <tr>
               <td><div class="avatar sm">ED</div></td>
               <td>Eric Dyer</td>
               <td>+63 917 222 1111</td>
               <td>eric@example.com</td>
-              <td><span class="badge warning">Pending</span></td>
+              <td><span class="badge success">Active</span></td>
               <td class="ops">
                 <button class="icon" aria-label="view">🔍</button>
                 <button class="icon" aria-label="edit">✏️</button>
                 <button class="icon" aria-label="delete">🗑️</button>
               </td>
-              <td><button class="btn ghost">Log in</button></td>
             </tr>
             <tr>
               <td><div class="avatar sm">AW</div></td>
@@ -113,7 +101,6 @@
                 <button class="icon" aria-label="edit">✏️</button>
                 <button class="icon" aria-label="delete">🗑️</button>
               </td>
-              <td><button class="btn ghost">Log in</button></td>
             </tr>
           </tbody>
         </table>
@@ -126,9 +113,7 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <small>UI prototype • No backend logic • © Rean Ramz Lending Corp</small>
-  </footer>
+  
 
   <script src="../js/staff_dashboard.js"></script>
 </body>

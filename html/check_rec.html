@@ -1,116 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Rean Ramz Lending Corp</title>
-        <link rel="stylesheet" href="../css/check_rec.css">
-        <link rel="icon" href="../assets/logo.png">
-    </head>
-    <body>
-        <header>
-            <nav class="nav-bar">
-                <ul class="navi">
-                    <li>
-                        <a href="admin.html">
-                            <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="admin.html">
-                            <img class="home" src="../assets/home.svg" alt="Home">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rean Ramz Lending Corp</title>
+  <link rel="stylesheet" href="../css/check_rec.css">
+  <link rel="icon" href="../assets/logo.png">
+</head>
+<body>
+<header>
+  <nav class="nav-bar">
+    <ul class="navi">
+      <li>
+        <a href="admin.html">
+          <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
+        </a>
+      </li>
+      <li>
+        <a href="admin.html">
+          <img class="home" src="../assets/home.svg" alt="Home">
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
 
-        <main>
-            <section class="rec-container">
-                <div class="rec-content">
-                    <div class="header-row">
-                        <div class="profile-info">
-                            <h1>Customer Record</h1>
-                            <h2>John Doe</h2>
-                            <div class="customer-details">
-                                <div class="detail-box">
-                                    <p class="desc">Business Name</p>
-                                    <p class="info">Jollibee Corp</p>
-                                </div>
-                                <div class="detail-box">
-                                    <p class="desc">Phone Num</p>
-                                    <p class="info">8-7000</p>
-                                </div>
-                                <div class="detail-box">
-                                    <p class="desc">Address</p>
-                                    <p class="info">Highway</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<main>
+  <!-- Customer Record Section -->
+  <section class="rec-container">
+    <div class="rec-content">
+      <div class="header-row">
+        <div class="profile-info">
+          <h1>Customer Record</h1>
+          <h2 id="cust-name">Select a customer</h2>
+          <div class="customer-details">
+            <div class="detail-box">
+              <p class="desc">Business Name</p>
+              <p class="info" id="cust-business">---</p>
+            </div>
+            <div class="detail-box">
+              <p class="desc">Phone Num</p>
+              <p class="info" id="cust-phone">---</p>
+            </div>
+            <div class="detail-box">
+              <p class="desc">Address</p>
+              <p class="info" id="cust-address">---</p>
+            </div>
+            <div class="detail-box">
+              <p class="desc">Due Date</p>
+              <p class="info" id="cust-duedate">---</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                    <div class="stats-row">
-                        <div class="stat-box">
-                            <p class="stat-value">50000</p>
-                            <p class="stat-label">Amount</p>
-                        </div>
-                        <div class="stat-box">
-                            <p class="stat-value">60000</p>
-                            <p class="stat-label">Total Amount</p>
-                        </div>
-                        <div class="stat-box">
-                            <p class="stat-value">30000</p>
-                            <p class="stat-label">Balance</p>
-                        </div>
-                        <div class="stat-box">
-                            <p class="stat-value">10000</p>
-                            <p class="stat-label">Current Payment</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <div class="stats-row">
+        <div class="stat-box">
+          <p class="stat-value" id="cust-amount">0</p>
+          <p class="stat-label">Amount</p>
+        </div>
+        <div class="stat-box">
+          <p class="stat-value" id="cust-total">0</p>
+          <p class="stat-label">Total Amount</p>
+        </div>
+        <div class="stat-box">
+          <p class="stat-value" id="cust-balance">0</p>
+          <p class="stat-label">Balance</p>
+        </div>
+        <div class="stat-box">
+          <p class="stat-value" id="cust-payment">0</p>
+          <p class="stat-label">Current Payment</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <section class="container">
-                <div class="content">
-                    <h1>Search Record</h1>
-                    <input class="search" type="text" placeholder="Search">
-                </div>
-                <div class="records">
-                    <div class="record-card">
-                        <div class="record-header">
-                            <p class="Name">Sample Name</p>
-                            <p class="display">Display</p>
-                        </div>
-                        <div class="details">
-                            <div class="record-detail">
-                            <p class="desc">Amount</p>
-                            <p class="info">70000</p>
-                        </div>
-                            <div class="record-detail">
-                                <p class="desc">Balance</p>
-                                <p class="info">30000</p>
-                            </div>
-                        </div>
-                    </div>
+  <!-- Search Record Section -->
+  <section class="container">
+    <div class="content">
+      <h1>Search Record</h1>
+      <input class="search" type="text" id="search" placeholder="Search">
+    </div>
+    <div class="records" id="records">
+      <!-- JS will inject records from PHP -->
+    </div>
+  </section>
+</main>
 
-                    <div class="record-card">
-                        <div class="record-header">
-                            <p class="Name">Sample Name</p>
-                            <p class="display">Display</p>
-                        </div>
-                        <div class="details">
-                            <div class="record-detail">
-                            <p class="desc">Amount</p>
-                            <p class="info">70000</p>
-                        </div>
-                            <div class="record-detail">
-                                <p class="desc">Balance</p>
-                                <p class="info">30000</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </body>
+<script src="../js/check_rec.js"></script>
+</body>
 </html>
