@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rean Ramz Lending Corp</title>
+  <link rel="icon" href="../assets/logo.png" />
+  <link rel="stylesheet" href="../css/loginstatus.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="nav-bar">
+      <ul class="navi">
+        <li>
+          <a href="admin.html">
+            <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
+          </a>
+        </li>
+        <li>
+          <a href="admin.html">
+            <img class="home" src="../assets/home.svg" alt="Home">
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <aside class="sidebar">
+      <button class="tab active" data-tab="members">Collectors</button>
+      <button class="tab" data-tab="admins">Office Workers</button>
+      <div class="stats-card">
+        <div class="stats-row">
+          <span>Total employees:</span>
+          <strong id="totalEmployees">0</strong>
+        </div>
+        <div class="stats-row">
+          <span>Active now:</span>
+          <strong id="activeEmployees">0</strong>
+        </div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="toolbar">
+        <div class="tabs">
+          <button class="chip active" data-content="members">Members</button>
+          <button class="chip" data-content="add">Add new</button>
+        </div>
+        <div class="actions">
+          <input type="text" placeholder="Search" class="search" id="searchInput" />
+        </div>
+      </div>
+
+      <!-- Employee Table -->
+      <div class="table-wrap content-section" id="membersSection">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Employee Name</th>
+              <th>Department</th>
+              <th>Email</th>
+              <th>Time In</th>
+              <th>Time Out</th>
+              <th>Status</th>
+              <th>Operations</th>
+            </tr>
+          </thead>
+          <tbody id="employeeTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Add New Employee Form -->
+      <div class="content-section" id="addSection" style="display:none;">
+        <h2>Add New Employee</h2>
+        <form class= "add-employee" id="addEmployeeForm">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="firstname" placeholder="Input First Name" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="lastname" placeholder="Input Last Name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Input Email" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Input Password" required>
+          </div>
+          <div class="form-group">
+            <label>Department</label>
+            <select name="deptid" required>
+              <option value="">Select Department</option>
+              <option value="1">Admin</option>
+              <option value="2">Secretary</option>
+              <option value="3">Collector</option>
+            </select>
+          </div>
+          <button type="submit" class="btn">Add</button>
+          <p id="formMessage" style="margin-top:10px;"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/loginstatus.js"></script>
+</body>
+</html>
