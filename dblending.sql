@@ -33,9 +33,12 @@ CREATE TABLE `tblcustomeracc` (
   `TotalAmount` decimal(10,2) DEFAULT NULL,
   `PerDay` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`CustomerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `tblcustomeracc` */
+
+insert  into `tblcustomeracc`(`CustomerID`,`FirstName`,`LastName`,`BusinessName`,`Address`,`PhoneNum`,`LoanAmount`,`AmountPaid`,`DueDate`,`TotalAmount`,`PerDay`) values 
+(1,'Mari','Jose','ChristmasStore','MaynilaTunga','09875643121',99999999.99,0.00,'2120-12-25',99999999.99,24154.62);
 
 /*Table structure for table `tbldepartment` */
 
@@ -45,9 +48,14 @@ CREATE TABLE `tbldepartment` (
   `DeptID` int(11) NOT NULL AUTO_INCREMENT,
   `DeptName` varchar(50) NOT NULL,
   PRIMARY KEY (`DeptID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `tbldepartment` */
+
+insert  into `tbldepartment`(`DeptID`,`DeptName`) values 
+(1,'Admin'),
+(2,'Secretary'),
+(3,'Collector');
 
 /*Table structure for table `tblemployees` */
 
@@ -64,9 +72,14 @@ CREATE TABLE `tblemployees` (
   UNIQUE KEY `Email` (`Email`),
   KEY `DeptID` (`DeptID`),
   CONSTRAINT `tblemployees_ibfk_1` FOREIGN KEY (`DeptID`) REFERENCES `tbldepartment` (`DeptID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `tblemployees` */
+
+insert  into `tblemployees`(`EmpID`,`FirstName`,`LastName`,`Email`,`PASSWORD`,`DeptID`) values 
+(1,'johnny','Doejali','admin@gmail.com','admin123',1),
+(6,'Miss','Ssim','TestCollector@gmail.com','test123',3),
+(7,'Jane','Doejali','janedai@gmail.com','jane123',1);
 
 /*Table structure for table `tblloginhistory` */
 
