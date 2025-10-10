@@ -1,12 +1,38 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #2D4882;
-    color: #CEE0F4;
+/* Base Styles */
+:root {
+    --primary-bg: #2D4882;
+    --card-bg: #0D1546;
+    --accent-color: #779ABF;
+    --text-color: #CEE0F4;
+    --box-bg: #151e55;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+/* Navigation */
 .nav-bar {
-    padding: 0px 20px;
+    padding: 10px 5%;
+    position: relative;
+    z-index: 100;
 }
 
 .navi {
@@ -14,176 +40,394 @@ body {
     justify-content: space-between;
     align-items: center;
     list-style: none;
-    margin: 0px 20px;
+    margin: 0;
     padding: 0;
 }
 
 .logo {
-    height: 100px;
+    height: 60px;
     width: auto;
+    transition: transform 0.3s ease;
 }
 
 .home {
-    height: 30px;
+    height: 24px;
     width: auto;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
+.home:active {
+    transform: scale(0.95);
+}
+
+/* Responsive Navigation */
+@media (min-width: 768px) {
+    .logo {
+        height: 80px;
+    }
+    
+    .home {
+        height: 30px;
+    }
+}
+
+/* Customer Record Section */
 .rec-container {
-    background: #0D1546;
-    margin: 0px 20px;
-    padding: 30px;
-    border-radius: 20px;
+    background: var(--card-bg);
+    margin: 15px 5%;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
 }
 
 .header-row {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .profile-info h1 {
-    margin: 0;
-    font-size: 18px;
-    color: #779ABF;
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: var(--accent-color);
 }
+
 .profile-info h2 {
-    margin: 5px 0 10px;
-    font-size: 22px;
-}
-.profile-info p {
-    margin: 2px 0;
-    font-size: 14px;
-    display: flex;
-    flex: 1;
+    margin: 0 0 15px 0;
+    font-size: 1.4rem;
+    color: white;
 }
 
 .customer-details {
     display: flex;
-    gap: 150px;
-    margin-top: 10px;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
 }
 
 .detail-box {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 0;
 }
 
 .detail-box .desc {
-    font-size: 13px;
-    color: #779ABF;
-    margin-bottom: 5px;
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    margin-bottom: 3px;
 }
 
 .detail-box .info {
-    font-weight: bold;
-    font-size: 15px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    word-break: break-word;
 }
 
+/* Responsive adjustments for larger screens */
+@media (min-width: 576px) {
+    .customer-details {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .detail-box {
+        min-width: calc(50% - 10px);
+    }
+}
+
+@media (min-width: 768px) {
+    .rec-container {
+        padding: 25px;
+        margin: 20px 5%;
+    }
+    
+    .header-row {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    
+    .customer-details {
+        gap: 30px;
+    }
+    
+    .detail-box {
+        min-width: auto;
+        flex: 0 0 auto;
+    }
+}
+
+@media (min-width: 992px) {
+    .customer-details {
+        gap: 60px;
+    }
+}
+
+/* Stats Row */
 .stats-row {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-top: 20px;
-    gap: 15px;
 }
 
 .stat-box {
-    background: #151e55;
-    flex: 1;
+    background: var(--box-bg);
+    flex: 1 1 calc(50% - 10px);
     text-align: center;
-    padding: 15px;
-    border-radius: 12px;
+    padding: 15px 10px;
+    border-radius: 10px;
+    min-width: 0;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+}
+
+.stat-box:active {
+    transform: scale(0.98);
 }
 
 .stat-value {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: 700;
     margin-bottom: 5px;
+    color: white;
 }
 
 .stat-label {
-    color: #779ABF;
-    font-size: 14px;
+    color: var(--accent-color);
+    font-size: 0.8rem;
 }
 
+/* Responsive adjustments for stats */
+@media (min-width: 576px) {
+    .stat-box {
+        flex: 1 1 calc(25% - 15px);
+        padding: 15px 5px;
+    }
+}
+
+@media (min-width: 768px) {
+    .stats-row {
+        gap: 15px;
+    }
+    
+    .stat-box {
+        padding: 15px 10px;
+    }
+    
+    .stat-value {
+        font-size: 1.4rem;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+    }
+}
+
+/* Search and Records Section */
 .container {
-    background: #0D1546;
-    margin: 20px;
-    padding: 30px;
-    border-radius: 20px;
+    background: var(--card-bg);
+    margin: 20px 5%;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
 }
 
 .content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.content h1 {
+    font-size: 1.3rem;
+    color: white;
+    margin: 0;
 }
 
 .search {
-    background-color: #ffffff;
+    background-color: white;
     border-radius: 8px;
-    border: none;
-    padding: 8px 15px;
-    font-size: 15px;
+    border: 2px solid transparent;
+    padding: 10px 15px;
+    font-size: 0.95rem;
     outline: none;
-    color: #0D1546;
+    color: var(--card-bg);
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(119, 154, 191, 0.2);
 }
 
 .records {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 15px;
 }
 
 .record-card {
-    background: #151e55;
+    background: var(--box-bg);
     padding: 15px;
     border-radius: 12px;
-    width: 220px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow);
 }
 
+.record-card:active {
+    transform: scale(0.98);
+}
+
+/* Responsive adjustments for records */
+@media (min-width: 576px) {
+    .content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .search {
+        width: auto;
+        min-width: 250px;
+    }
+    
+    .records {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+        margin: 20px auto;
+    }
+    
+    .rec-container {
+        max-width: 1400px;
+        margin: 20px auto;
+    }
+}
+
+/* Record Card Styles */
 .record-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .Name {
-    font-weight: bold;
-    font-size: 15px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
 }
 
 .display {
-    background-color: #02020B;
-    color: #779ABF;
-    padding: 10px 10px;
+    background-color: var(--card-bg);
+    color: var(--accent-color);
+    padding: 8px 12px;
     border-radius: 20px;
-    font-size: 12px;
-    transition: all 0.3s ease;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.display:hover{
-    background-color: #779ABF;
-    box-shadow: 0 2px 4px (#02020B);
-    transform: scale(1.09);
-    color: #ffffff;
+.display:active {
+    transform: scale(0.95);
+    background-color: var(--accent-color);
+    color: white;
 }
 
-.details{
+.details {
     display: flex;
-    flex: 1;
-    justify-content: space-between;
-    margin: 10px;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px 0 0 0;
 }
+
 .record-detail {
-    margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
 }
+
 .desc {
-    font-size: 13px;
-    color: #779ABF;
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    margin-bottom: 2px;
 }
+
 .info {
-    font-weight: bold;
-    font-size: 15px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: white;
+    word-break: break-word;
+}
+
+/* Hover effects for devices with hover capability */
+@media (hover: hover) and (pointer: fine) {
+    .display:hover {
+        background-color: var(--accent-color);
+        color: white;
+        transform: translateY(-1px);
+    }
+    
+    .record-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white;
+        color: black;
+        padding: 20px;
+    }
+    
+    .nav-bar, .search, .display {
+        display: none !important;
+    }
+    
+    .container, .rec-container {
+        background: white;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .stat-box, .record-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    
+    .records {
+        display: block;
+    }
+    
+    .record-card {
+        margin-bottom: 20px;
+        border: 1px solid #eee;
+    }
 }
