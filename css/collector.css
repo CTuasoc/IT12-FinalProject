@@ -77,38 +77,33 @@ body {
   color: #CEE0F4;
   padding-bottom: 30px;
 }
-
-.stats-box a {
+.stats-box a{
   background: #02020B;
+  margin-top: 10px;
   padding: 10px 20px;
   border-radius: 20px;
   color: white;
   font-weight: bold;
   text-decoration: none;
   transition: all 0.3s ease;
-  cursor: pointer;
 }
-
-.stats-box a:hover {
+.stats-box a:hover{
   background-color: #779ABF;
-  transform: scale(1.09);
-  color: #02020B;
+    box-shadow: 0 2px 4px (#02020B);
+    transform: scale(1.09);
+    color: #02020B;
 }
+  .stats-graphics {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+  .stats-graphics img {
+    width: 110px;
+    height: 110px;
+    padding: 10px;
+  }
 
-.stats-graphics {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  flex-wrap: wrap;
-  justify-content: center;
-  flex: 1;
-  min-width: 220px;
-}
-
-.stats-graphics img {
-  width: 110px;
-  height: 110px;
-}
 
 /* ========= MAIN CONTENT (SERNO CONTAINER) ========= */
 .serno {
