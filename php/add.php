@@ -1,6 +1,11 @@
 <?php
-header("Content-Type: application/json");
+session_start();
 include("../php/config.php");
+
+if (!isset($_SESSION['user']) || $_SESSION['dept'] != 1) {
+    header("Location: login.php");
+    exit();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName   = $_POST['firstname'] ?? '';
@@ -59,6 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 } else {
-    echo json_encode(["success" => false, "message" => "Invalid request method"]);
+    readfile("../html/add.html");
 }
 ?>

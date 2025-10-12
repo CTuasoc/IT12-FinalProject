@@ -1,6 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const recordsDiv = document.getElementById("records");
   const searchInput = document.getElementById("search");
+  const deleteBtn = document.getElementById("deleteBtn");
+  const addFormMsg = document.getElementById("formMessage");
+  let currentCustomerID = null;
+
+  // Helper: display message
+  function showMessage(message, color = "black") {
+    addFormMsg.style.color = color;
+    addFormMsg.textContent = message;
+  }
 
   // Fetch and display all records
   async function loadRecords() {
@@ -8,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch("../php/fetch_records.php");
       const data = await res.json();
 
-      recordsDiv.innerHTML = ""; // Clear previous content
+      recordsDiv.innerHTML = "";
 
       if (!Array.isArray(data) || data.length === 0) {
         recordsDiv.innerHTML = "<p>No customer records found.</p>";
@@ -38,8 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       attachDisplayEvents();
+      showMessage(""); // clear messages after load
     } catch (err) {
-      recordsDiv.innerHTML = `<p>Error loading records: ${err.message}</p>`;
+      showMessage(`Error loading records: ${err.message}`, "red");
     }
   }
 
@@ -48,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".display").forEach(btn => {
       btn.addEventListener("click", async () => {
         const id = btn.dataset.id;
+        currentCustomerID = id;
         const res = await fetch(`../php/fetch_customer.php?id=${id}`);
         const cust = await res.json();
 
@@ -60,9 +71,46 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("cust-total").textContent = cust.TotalAmount;
           document.getElementById("cust-balance").textContent = (cust.TotalAmount - cust.AmountPaid).toFixed(2);
           document.getElementById("cust-duedate").textContent = cust.DueDate;
-          document.getElementById("cust-payment").textContent = `${amountPaid.toFixed(2)}`;
+          const amountPaid = parseFloat(cust.AmountPaid) || 0;
+          document.getElementById("cust-payment").textContent = amountPaid.toFixed(2);
+          showMessage("Customer loaded successfully.", "green");
+        } else {
+          showMessage("Error loading customer.", "red");
         }
       });
+    });
+  }
+
+  // Admin-only delete with password confirmation
+  if (typeof isAdmin !== "undefined" && isAdmin) {
+    deleteBtn.style.display = "inline-block";
+    deleteBtn.addEventListener("click", async () => {
+      if (!currentCustomerID) {
+        showMessage("Please select a customer first.", "red");
+        return;
+      }
+
+      const password = prompt("Enter your password to confirm deletion:");
+      if (!password) {
+        showMessage("Deletion canceled. No password entered.", "red");
+        return;
+      }
+
+      const res = await fetch("delete_customer.php", {
+
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `id=${encodeURIComponent(currentCustomerID)}&password=${encodeURIComponent(password)}`
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        showMessage(data.message, "green");
+        loadRecords();
+      } else {
+        showMessage(data.message, "red");
+      }
     });
   }
 

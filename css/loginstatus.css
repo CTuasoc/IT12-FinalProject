@@ -123,18 +123,19 @@ body {
   padding: 8px 12px;
   background: rgb(165, 204, 248);
   border: none;
-  color: #2d4882; 
+  color: #0D1546; 
   border-radius: 20px; 
   cursor: pointer; 
   font-weight: bold;
   width: 100px;
-  transition: all 1s ease;
+  transition: all 0.3s ease;
 }
 
 .btn:hover { 
   background: #779abf;
   color: #0D1546;
-  border-radius: 30px;
+  box-shadow: 0 2px 4px (#02020B);
+  transform: scale(1.09);
 }
 
 .table-wrap { 
@@ -223,14 +224,48 @@ body {
 .add-employee{
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+}
+
+.form-group{
+  padding: 20px;
+  flex-direction: column;
+  flex: 1;
+  min-width: 200px;
+
+}
+
+.form-group label{
   padding: 0;
-  margin: 0;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-submit{
+  margin-top: 20px;
+  text-align: center; 
 }
 
 .form-group input, select{
-  padding: 10px;
-  border-radius: 20px;
-  border: none;
-  background: #ffffff;
-  margin: 10px 0;
+    background: white;
+    margin: 10px;
+    width: 250px;            
+    box-sizing: border-box; 
+    border-radius: 9px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    height: auto;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-submit {
+  margin: 20px 30px;
+  text-align: left;
 }

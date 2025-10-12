@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rean Ramz Lending Corp</title>
+  <title>Records | Rean Ramz Lending Corp</title>
   <link rel="stylesheet" href="../css/check_rec.css">
   <link rel="icon" href="../assets/logo.png">
 </head>
@@ -12,12 +12,12 @@
   <nav class="nav-bar">
     <ul class="navi">
       <li>
-        <a href="admin.html">
+        <a href="../php/admin.php">
           <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
         </a>
       </li>
       <li>
-        <a href="admin.html">
+        <a href="../php/admin.php">
           <img class="home" src="../assets/home.svg" alt="Home">
         </a>
       </li>
@@ -49,6 +49,12 @@
             <div class="detail-box">
               <p class="desc">Due Date</p>
               <p class="info" id="cust-duedate">---</p>
+            </div>
+            <div class="detail-box">
+              <button class="delete-btn" id="deleteBtn" style="display:none;">Delete Record</button>
+            </div>
+            <div class="detail-box">
+              <p id="formMessage" style="margin-top:10px;"></p>
             </div>
           </div>
         </div>

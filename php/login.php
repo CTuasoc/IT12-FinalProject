@@ -32,8 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($dept['DeptName'] === "Admin") {
                 header("Location: admin.php");
                 exit();
+            } else if ($dept['DeptName'] === "Secretary") {
+                header("Location: secretary.php");
+                exit();
             } else {
-                header("Location: teller_dashboard.php");
+                header("Location: collector.php");
                 exit();
             }
         } else {

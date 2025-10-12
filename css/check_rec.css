@@ -125,6 +125,23 @@ body {
     word-break: break-word;
 }
 
+.detail-box button{
+    background-color: #2D4882;
+    color: #CEE0F4; 
+    padding: 10px 30px;
+    border: none;
+    border-radius: 15px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover{
+    background-color: #CEE0F4; 
+    color: #2D4882;
+    box-shadow: 0 2px 4px (#02020B);
+    transform: scale(1.09);
+}
+
 /* Responsive adjustments for larger screens */
 @media (min-width: 576px) {
     .customer-details {

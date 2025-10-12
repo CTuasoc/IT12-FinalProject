@@ -94,11 +94,19 @@ body {
     font-weight: bold;
 }
 
+.btn{
+    margin: 50px;
+    text-align: left;
+    display: flex;
+    gap: 50px;
+}
+
 .add-btn{
     background: #0d1546;
     color: #CEE0F4;
-    padding: 20px;
-    margin: 30px;
+    padding: 20px 30px;
+    font-weight: bold;
+    border: none;
     border-radius: 15px;
     transition: all 0.3s ease;
 }
@@ -106,5 +114,6 @@ body {
 .add-btn:hover{
     background: #CEE0F4;
     color: #02020B;
-
+    box-shadow: 0 2px 4px (#02020B);
+    transform: scale(1.09);
 }

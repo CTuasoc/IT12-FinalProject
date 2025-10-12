@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const totalAmountInput = document.getElementById("totalamount");
   const perDayInput = document.getElementById("perday");
   const addForm = document.getElementById("addForm");
+  const addFormMsg = document.getElementById("formMessage");
 
   // Calculate loan details
   function calculateLoan() {
@@ -44,7 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            alert("Account Added Successfully!");
+            addFormMsg.style.color = "lightgreen";
+            addFormMsg.textContent = "Account Added Successfully!";
 
             // Reset form
             addForm.reset();
