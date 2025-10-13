@@ -223,6 +223,37 @@ body {
   hyphens: auto;
 }
 
+.logout {
+  margin-left: auto;
+}
+.logout a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.logout-btn {
+background-color: #0D1546;
+border: none;
+display: flex;
+align-items: center;
+gap: 6px;
+cursor: pointer;
+color: white;
+font-size: 15px;
+font-weight: 500;
+padding: 8px 12px;
+border-radius: 6px;
+transition: 0.2s;
+font-weight: bold;
+}
+
+.logout-btn:hover {
+background-color: #CEE0F4;
+border-radius: 15px;
+color: #02020B;
+}
+
 /* ========= RESPONSIVE DESIGN ========= */
 
 /* --- Tablets (max-width: 1024px) --- */
