@@ -1,11 +1,7 @@
 <?php
 header("Content-Type: application/json");
 
-$conn = new mysqli("localhost", "root", "", "dbLending");
-if ($conn->connect_error) {
-    echo json_encode(["error" => "DB connection failed"]);
-    exit;
-}
+include("config.php");
 
 $sql = "SELECT 
             CustomerID, 
@@ -26,7 +22,7 @@ if ($result && $result->num_rows > 0) {
         $amountPaid  = floatval($row["AmountPaid"]);
 
         // If no payments made, AmountPaid = 0
-        if ($amountPaid = 0) {
+        if ($amountPaid <= 0) {
             $amountPaid = 0;
         }
 

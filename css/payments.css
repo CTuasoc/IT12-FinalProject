@@ -1,0 +1,675 @@
+/* ========= GLOBAL STYLES ========= */
+body {
+  font-family: Arial, sans-serif;
+  background: #2D4882;
+  color: #CEE0F4;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========= HEADER ========= */
+.nav-bar {
+  padding: 10px 30px;
+}
+
+.navi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.logo {
+  height: 100px;
+  width: auto;
+}
+
+.home {
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.home:active {
+  transform: scale(0.95);
+}
+
+/* ========= MAIN CONTENT (SERNO CONTAINER) ========= */
+.serno {
+  background-color: #0D1546;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+/* ========= PAGE HEADER ========= */
+.page-header {
+  width: 100%;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #2D4882;
+}
+
+.page-header h2 {
+  font-size: 28px;
+  margin: 0 0 10px 0;
+  color: #CEE0F4;
+  font-weight: bold;
+}
+
+.page-header p {
+  font-size: 16px;
+  margin: 0;
+  color: #779ABF;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.record-payment-btn {
+  background-color: #779ABF;
+  border: none;
+  color: #02020B;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.record-payment-btn:hover {
+  background-color: #CEE0F4;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h3 {
+  font-size: 22px;
+  color: #CEE0F4;
+  margin: 0;
+}
+
+.refresh-btn {
+  background-color: #2D4882;
+  border: none;
+  color: #CEE0F4;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+  background-color: #779ABF;
+  color: #02020B;
+}
+
+/* ========= MODAL STYLES ========= */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background-color: #0D1546;
+  border-radius: 15px;
+  padding: 30px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+  margin: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #2D4882;
+}
+
+.modal-header h3 {
+  font-size: 24px;
+  color: #CEE0F4;
+  margin: 0;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  color: #CEE0F4;
+  font-size: 32px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+}
+
+.close-modal:hover {
+  background-color: #2D4882;
+  color: #CEE0F4;
+  transform: rotate(90deg);
+}
+
+/* ========= FORM STYLES ========= */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #CEE0F4;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #2D4882;
+  border-radius: 8px;
+  background-color: #2D4882;
+  color: #CEE0F4;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #779ABF;
+  background-color: #1a2a5a;
+}
+
+.form-group input::placeholder {
+  color: #779ABF;
+}
+
+.customer-info {
+  background-color: #2D4882;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 2px solid #779ABF;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #779ABF;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: #CEE0F4;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.info-value {
+  color: #CEE0F4;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.balance-amount {
+  color: #779ABF;
+  font-size: 18px;
+}
+
+.balance-amount.paid {
+  color: #4CAF50;
+}
+
+.form-message {
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+  display: none;
+}
+
+.form-message.success {
+  background-color: #4CAF50;
+  color: white;
+  display: block;
+}
+
+.form-message.error {
+  background-color: #f44336;
+  color: white;
+  display: block;
+}
+
+.form-message.info {
+  background-color: #2196F3;
+  color: white;
+  display: block;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.btn-cancel,
+.btn-submit {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel {
+  background-color: #2D4882;
+  color: #CEE0F4;
+}
+
+.btn-cancel:hover {
+  background-color: #1a2a5a;
+}
+
+.btn-submit {
+  background-color: #779ABF;
+  color: #02020B;
+}
+
+.btn-submit:hover {
+  background-color: #CEE0F4;
+  transform: scale(1.05);
+}
+
+/* ========= PAYMENT CONTAINER ========= */
+.payment-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.payment-table-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid #779ABF;
+}
+
+.loading-message,
+.no-payments-message {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #CEE0F4;
+  background: #2D4882;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+/* ========= PAYMENT TABLE ========= */
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #2D4882;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.payment-table thead {
+  background: #0D1546;
+}
+
+.payment-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: bold;
+  color: #CEE0F4;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #779ABF;
+}
+
+.payment-table td {
+  padding: 12px 15px;
+  color: #CEE0F4;
+  font-size: 14px;
+  border-bottom: 1px solid #779ABF;
+}
+
+.payment-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.payment-table tbody tr:hover {
+  background-color: #779ABF;
+  color: #02020B;
+}
+
+.payment-table tbody tr:hover td {
+  color: #02020B;
+}
+
+.payment-table tbody tr.customer-group-start {
+  border-top: 2px solid #779ABF;
+}
+
+.payment-table tbody tr.customer-group-start td {
+  font-weight: bold;
+  background-color: rgba(119, 154, 191, 0.1);
+}
+
+/* ========= RESPONSIVE DESIGN ========= */
+
+/* --- Tablets (max-width: 1024px) --- */
+@media (max-width: 1024px) {
+  .nav-bar {
+    padding: 10px 20px;
+  }
+
+  .logo {
+    height: 85px;
+  }
+
+  .serno {
+    width: 92%;
+    padding: 25px;
+  }
+
+  .page-header h2 {
+    font-size: 24px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .record-payment-btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+    margin: 10px;
+  }
+
+  .modal-header h3 {
+    font-size: 20px;
+  }
+
+  .payment-table {
+    font-size: 13px;
+  }
+
+  .payment-table th,
+  .payment-table td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+
+/* --- Mobile (max-width: 768px) --- */
+@media (max-width: 768px) {
+  .nav-bar {
+    padding: 8px 15px;
+  }
+
+  .navi {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding: 0;
+  }
+
+  .logo {
+    height: 65px;
+    width: auto;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .home {
+    height: 28px;
+  }
+
+  .serno {
+    width: 95%;
+    padding: 20px 15px;
+    margin: 20px auto;
+  }
+
+  .page-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+  }
+
+  .page-header h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .page-header p {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .record-payment-btn {
+    width: 100%;
+    font-size: 13px;
+    padding: 10px 18px;
+  }
+
+  .section-header h3 {
+    font-size: 18px;
+  }
+
+  .refresh-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .modal-content {
+    padding: 15px;
+    width: 98%;
+    margin: 5px;
+  }
+
+  .modal-header h3 {
+    font-size: 18px;
+  }
+
+  .form-group input,
+  .form-group select {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .payment-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .payment-table {
+    min-width: 800px;
+    font-size: 12px;
+  }
+
+  .payment-table th,
+  .payment-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .loading-message,
+  .no-payments-message {
+    padding: 30px 20px;
+    font-size: 16px;
+  }
+}
+
+/* --- Extra Small (max-width: 480px) --- */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .nav-bar {
+    padding: 8px 12px;
+  }
+
+  .logo {
+    height: 55px;
+  }
+
+  .home {
+    height: 24px;
+  }
+
+  .serno {
+    width: 96%;
+    padding: 18px 12px;
+    margin: 15px auto;
+  }
+
+  .page-header h2 {
+    font-size: 18px;
+  }
+
+  .page-header p {
+    font-size: 12px;
+  }
+
+  .record-payment-btn {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+
+  .section-header h3 {
+    font-size: 16px;
+  }
+
+  .modal-content {
+    padding: 12px;
+  }
+
+  .modal-header h3 {
+    font-size: 16px;
+  }
+
+  .form-group input,
+  .form-group select {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .payment-table {
+    min-width: 700px;
+    font-size: 11px;
+  }
+
+  .payment-table th,
+  .payment-table td {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .loading-message,
+  .no-payments-message {
+    padding: 25px 15px;
+    font-size: 14px;
+  }
+}
+

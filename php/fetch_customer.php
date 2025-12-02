@@ -6,11 +6,7 @@ if (!isset($_GET["id"])) {
     exit;
 }
 
-$conn = new mysqli("localhost", "root", "", "dbLending");
-if ($conn->connect_error) {
-    echo json_encode(["error" => "DB connection failed"]);
-    exit;
-}
+include("config.php");
 
 $id = intval($_GET["id"]);
 $sql = "SELECT 

@@ -35,11 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="details">
             <div class="record-detail">
               <p class="desc">Amount</p>
-              <p class="info">${cust.LoanAmount}</p>
+              <p class="info">₱${cust.LoanAmount}</p>
             </div>
             <div class="record-detail">
               <p class="desc">Balance</p>
-              <p class="info">${cust.LoanBalance}</p>
+              <p class="info">₱${cust.Balance}</p>
             </div>
           </div>
         `;
@@ -69,10 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("cust-address").textContent = cust.Address;
           document.getElementById("cust-amount").textContent = cust.LoanAmount;
           document.getElementById("cust-total").textContent = cust.TotalAmount;
-          document.getElementById("cust-balance").textContent = (cust.TotalAmount - cust.AmountPaid).toFixed(2);
+          // Use the Balance field from PHP which is already calculated correctly
+          document.getElementById("cust-balance").textContent = "₱" + cust.Balance;
           document.getElementById("cust-duedate").textContent = cust.DueDate;
-          const amountPaid = parseFloat(cust.AmountPaid) || 0;
-          document.getElementById("cust-payment").textContent = amountPaid.toFixed(2);
+          document.getElementById("cust-payment").textContent = "₱" + cust.AmountPaid;
           showMessage("Customer loaded successfully.", "green");
         } else {
           showMessage("Error loading customer.", "red");

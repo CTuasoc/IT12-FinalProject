@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collection History</title>
+    <link rel="stylesheet" href="../css/collection_history.css">
+    <link rel="icon" href="../assets/logo.png">
+</head>
+<body>
+<header>
+  <nav class="nav-bar">
+    <ul class="navi">
+      <li>
+        <a href="../php/{{HOME_PAGE}}">
+          <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
+        </a>
+      </li>
+      <li>
+        <a href="../php/{{HOME_PAGE}}">
+          <img class="home" src="../assets/home.svg" alt="Home">
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+    <!-- Main Content Container -->
+    <div class="serno">
+        <div class="page-header">
+            <div class="header-top">
+                <div class="title-search-wrapper">
+                    <h2>COLLECTION HISTORY</h2>
+                </div>
+                <input type="text" id="searchInput" class="minimalist-search" placeholder="Search...">
+            </div>
+            <p class="page-description">View collection history organized by Customer ID. Click on a customer to view their detailed payment history.</p>
+        </div>
+
+        <!-- Collection History Container -->
+        <div class="collection-container">
+            <div id="loadingMessage" class="loading-message">Loading collection history...</div>
+            <div id="noCollectionsMessage" class="no-collections-message" style="display: none;">
+                No collection records found.
+            </div>
+            <!-- Refresh Button -->
+            <div class="refresh-button-wrapper">
+                <button id="refreshBtn" class="refresh-btn-minimalist" title="Refresh collection history">
+                    🔄 Refresh
+                </button>
+            </div>
+            <div id="collectionGrid" class="collection-grid" style="display: none;">
+                <!-- Customer cards will be inserted here -->
+            </div>   
+        </div>
+    </div>
+
+    <!-- Customer Payment History Modal -->
+    <div id="historyModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modalCustomerName">Customer Payment History</h3>
+                    <p id="modalCustomerInfo" class="modal-subtitle"></p>
+                </div>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalLoading" class="modal-loading">Loading payment history...</div>
+                <div id="modalNoPayments" class="modal-no-payments" style="display: none;">
+                    No payment records found for this customer.
+                </div>
+                <div id="modalHistoryContainer" class="modal-history-container" style="display: none;">
+                    <div class="history-table-wrapper">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Payment ID</th>
+                                    <th>Amount</th>
+                                    <th>Payment Date</th>
+                                    <th>Collected By</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Payment history will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/collection_history.js"></script>
+</body>
+</html>

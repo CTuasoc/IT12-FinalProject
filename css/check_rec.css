@@ -30,7 +30,7 @@ body {
 }
 /* Navigation */
 .nav-bar {
-    padding: 10px 5%;
+    padding: 10px 30px;
     position: relative;
     z-index: 100;
 }
@@ -42,16 +42,17 @@ body {
     list-style: none;
     margin: 0;
     padding: 0;
+    flex-wrap: wrap;
 }
 
 .logo {
-    height: 60px;
+    height: 100px;
     width: auto;
     transition: transform 0.3s ease;
 }
 
 .home {
-    height: 24px;
+    height: 30px;
     width: auto;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -62,22 +63,24 @@ body {
 }
 
 /* Responsive Navigation */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .logo {
         height: 80px;
     }
     
-    .home {
-        height: 30px;
+    .nav-bar {
+        padding: 10px 15px;
     }
 }
 
-/* Customer Record Section */
+/* Main Content Container */
 .rec-container {
     background: var(--card-bg);
-    margin: 15px 5%;
-    padding: 20px;
-    border-radius: 15px;
+    width: 90%;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-sizing: border-box;
     box-shadow: var(--shadow);
 }
 
