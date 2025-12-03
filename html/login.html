@@ -18,16 +18,15 @@
       <input type="text" id="username" name="username" required>
       
       <label>Password</label>
-      <input type="password" name="password" required>
+        <div class="password-wrapper">
+            <input type="password" id="password" name="password" required>
+            <img id="toggleEye" src="../assets/eye_crossed_out.png" class="eye-icon">
+        </div>
       
       <button type="submit">Log In</button>
     </form>
-
-    <!-- error placeholder -->
-    <p id="error-message" style="color:red; display:none;">Invalid username or password!</p>
+    <p id="error-message" style="color:red; display:none;">Invalid username or password.</p>
   </div>
-
-  <!-- link to external JavaScript -->
-  <script src="../javascript/login.js"></script>
+  <script src="../js/login.js"></script>
 </body>
 </html>
