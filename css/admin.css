@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background: #2D4882;
-    color: #CEE0F4;
+    background: #ffffff;
+    color: #000c1a;
     margin: 0;
     padding: 0;
   }
@@ -25,7 +25,7 @@ body {
 }
 
 .stats-box {
-  background: #0D1546;
+  background: #d6f1ff;
   border-radius: 15px;
   margin: auto;
   padding: 50px;
@@ -38,24 +38,24 @@ body {
   margin: 0;
   font-size: 28px;
   font-weight: bold;
-  color: #CEE0F4;
+  color: #000c1a;
   padding-bottom: 30px;
 }
 .stats-box a{
-  background: #02020B;
+  background: #0e61ba;
   margin-top: 10px;
   padding: 10px 20px;
   border-radius: 20px;
-  color: white;
+  color: #ffffff;
   font-weight: bold;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 .stats-box a:hover{
-  background-color: #779ABF;
+  background-color: #003e81;
     box-shadow: 0 2px 4px (#02020B);
     transform: scale(1.09);
-    color: #02020B;
+    color: #ffffff;
 }
   .stats-graphics {
     display: flex;
@@ -80,7 +80,7 @@ body {
   }
   .services h3 {
     font-size: 22px;
-    color: #CEE0F4;
+    color: #000c1a;
   }
   .service-items {
     display: flex;
@@ -90,21 +90,21 @@ body {
     text-decoration: none;
   }
   .service-card {
-    background: #0D1546;
+    background: #d6f1ff;
     border-radius: 15px;
     width: 150px;
     height: 150px;
     text-align: center;
     justify-content: space-between;
     padding: 15px;
-    color: #CEE0F4;
+    color: #000c1a;
     font-size: 14px;
     font-weight: bold;
     transition: all 0.3s ease;
   }
 
   .service-card:hover{
-    background-color: #779ABF;
+    background-color: #b0e1ff;
     box-shadow: 0 2px 4px (#02020B);
     transform: scale(1.09);
     color: #02020B;
@@ -122,10 +122,10 @@ body {
   .notify h3 {
     font-size: 22px;
     margin-bottom: 15px;
-    color: #CEE0F4;
+    color: #000c1a;
   }
   .notify-box {
-    background: #779abf;
+    background: #e6f2ff;
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 15px;
@@ -146,13 +146,13 @@ body {
   }
 
   .logout-btn {
-  background-color: #0D1546;
+  background-color: #0e61ba;
   border: none;
   display: flex;
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  color: white;
+  color: #ffffff;
   font-size: 15px;
   font-weight: 500;
   padding: 8px 12px;
@@ -162,7 +162,7 @@ body {
 }
 
 .logout-btn:hover {
-  background-color: #CEE0F4;
+  background-color: #003e81;
   border-radius: 15px;
   color: #02020B;
 }
