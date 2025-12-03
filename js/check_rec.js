@@ -18,11 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
 
       recordsDiv.innerHTML = "";
+      const noRecordsMsg = document.getElementById("noRecordsMessage");
 
       if (!Array.isArray(data) || data.length === 0) {
-        recordsDiv.innerHTML = "<p>No customer records found.</p>";
+        noRecordsMsg.style.display = "block";
         return;
       }
+
+      noRecordsMsg.style.display = "none";
 
       data.forEach(cust => {
         const card = document.createElement("div");
@@ -67,8 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("cust-business").textContent = cust.BusinessName;
           document.getElementById("cust-phone").textContent = cust.PhoneNum;
           document.getElementById("cust-address").textContent = cust.Address;
-          document.getElementById("cust-amount").textContent = cust.LoanAmount;
-          document.getElementById("cust-total").textContent = cust.TotalAmount;
+          document.getElementById("cust-amount").textContent ="₱" + cust.LoanAmount;
+          document.getElementById("cust-total").textContent = "₱" + cust.TotalAmount;
           // Use the Balance field from PHP which is already calculated correctly
           document.getElementById("cust-balance").textContent = "₱" + cust.Balance;
           document.getElementById("cust-duedate").textContent = cust.DueDate;
@@ -117,10 +120,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Search filter
   searchInput.addEventListener("input", () => {
     const term = searchInput.value.toLowerCase();
+    const noRecordsMsg = document.getElementById("noRecordsMessage");
+    let visibleCount = 0;
+
     document.querySelectorAll(".record-card").forEach(card => {
       const name = card.querySelector(".Name").textContent.toLowerCase();
-      card.style.display = name.includes(term) ? "block" : "none";
+      const isVisible = name.includes(term);
+      card.style.display = isVisible ? "block" : "none";
+      if (isVisible) visibleCount++;
     });
+
+    // Show "No customer records found" message if no results match
+    noRecordsMsg.style.display = visibleCount === 0 ? "block" : "none";
   });
 
   loadRecords();

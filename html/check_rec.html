@@ -87,8 +87,13 @@
       <h1>Search Record</h1>
       <input class="search" type="text" id="search" placeholder="Search">
     </div>
-    <div class="records" id="records">
-      <!-- JS will inject records from PHP -->
+    <div class="records-wrapper">
+      <div id="noRecordsMessage" class="no-records-message" style="display: none;">
+        No customer record found.
+      </div>
+      <div class="records" id="records">
+        <!-- JS will inject records from PHP -->
+      </div>
     </div>
   </section>
 </main>

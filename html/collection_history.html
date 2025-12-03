@@ -33,6 +33,12 @@
                     <h2>COLLECTION HISTORY</h2>
                 </div>
                 <input type="text" id="searchInput" class="minimalist-search" placeholder="Search...">
+                <!-- Refresh Button -->
+                <div class="refresh-button-wrapper">
+                    <button id="refreshBtn" class="refresh-btn-minimalist" title="Refresh collection history">
+                        🔄 Refresh
+                    </button>
+                </div>
             </div>
             <p class="page-description">View collection history organized by Customer ID. Click on a customer to view their detailed payment history.</p>
         </div>
@@ -42,12 +48,6 @@
             <div id="loadingMessage" class="loading-message">Loading collection history...</div>
             <div id="noCollectionsMessage" class="no-collections-message" style="display: none;">
                 No collection records found.
-            </div>
-            <!-- Refresh Button -->
-            <div class="refresh-button-wrapper">
-                <button id="refreshBtn" class="refresh-btn-minimalist" title="Refresh collection history">
-                    🔄 Refresh
-                </button>
             </div>
             <div id="collectionGrid" class="collection-grid" style="display: none;">
                 <!-- Customer cards will be inserted here -->
