@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Open payment modal
     recordPaymentBtn.addEventListener("click", () => {
         loadCustomers();
-        paymentModal.style.display = "flex";
+        paymentModal.classList.add("show");
+        document.body.classList.add("modal-open");
         paymentForm.reset();
         paymentDate.value = new Date().toISOString().split('T')[0];
         customerInfo.style.display = "none";
@@ -41,7 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function closePaymentModal() {
-        paymentModal.style.display = "none";
+        paymentModal.classList.remove("show");
+        document.body.classList.remove("modal-open");
         paymentForm.reset();
         customerInfo.style.display = "none";
         formMessage.textContent = "";
@@ -202,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => {
                     closePaymentModal();
                     loadPaymentHistory(); // Refresh the main payment history table
-                }, 1500);
+                }, 1200);
             } else {
                 // Show specific error message from the server
                 showFormMessage(data.message || "An unknown error occurred.", "error");
@@ -213,8 +215,10 @@ document.addEventListener("DOMContentLoaded", () => {
             showFormMessage("A network error occurred: " + err.message, "error");
         } finally {
             // Re-enable the button regardless of success or failure
-            submitButton.disabled = false;
-            submitButton.textContent = "Record Payment";
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = "Record Payment";
+            }
         }
     });
 

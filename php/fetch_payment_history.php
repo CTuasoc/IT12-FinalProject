@@ -1,6 +1,14 @@
 <?php
 header("Content-Type: application/json");
 
+// Check session and authentication
+session_start();
+if (!isset($_SESSION['user']) || $_SESSION['dept'] != 3) {
+    echo json_encode(["error" => "Unauthorized access"]);
+    http_response_code(401);
+    exit;
+}
+
 $conn = new mysqli("localhost", "root", "", "dbLending");
 if ($conn->connect_error) {
     echo json_encode(["error" => "DB connection failed"]);
