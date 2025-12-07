@@ -118,23 +118,70 @@ body {
   }
   .notify {
     margin: 10px 5%;
+    position: relative;
+    min-height: 200px; /* Ensure there's enough space for the button */
+  }
+  .notifications-container {
+    min-height: 150px; /* Ensure container takes up space even when empty */
+  }
+  .view-all-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+  }
+  .view-all-btn {
+    background-color: #0e61ba;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  .view-all-btn:hover {
+    background-color: #003e81;
   }
   .notify h3 {
     font-size: 22px;
-    margin-bottom: 15px;
+    margin: 0 0 15px 0;
     color: #000c1a;
   }
   .notify-box {
     background: #e6f2ff;
     border-radius: 15px;
-    padding: 20px;
+    padding: 15px 20px;
     margin-bottom: 15px;
-    height: 60px;
+    min-height: 60px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: bold;
     color: #02020B;
+  }
+  
+  .notification-actions {
+    display: flex;
+    gap: 10px;
+    margin-left: 10px;
+  }
+  
+  .action-btn {
+    background-color: #0e61ba;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .action-btn:hover {
+    background-color: #003e81;
   }
   .logout {
     margin-left: auto;
@@ -233,4 +280,25 @@ body {
 
 .modal-notification-item:last-child {
     border-bottom: none;
+}
+
+/* Modal Actions - Button Container */
+.modal-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.modal-actions .action-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.modal-actions .delete-btn {
+    background-color: #dc3545;
+}
+
+.modal-actions .delete-btn:hover {
+    background-color: #c82333;
 }

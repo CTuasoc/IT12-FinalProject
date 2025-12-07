@@ -20,10 +20,10 @@ $all = isset($_GET['all']) && $_GET['all'] == '1';
 // --- 3. Construct SQL Query ---
 if ($all) {
     // For the "View All" modal: Fetch ALL notifications
-    $sql = "SELECT notif_id, notif_msg, type, is_read, created_at FROM tblnotifications ORDER BY created_at DESC";
+    $sql = "SELECT notif_id, notif_msg, type, is_read, meta, created_at FROM tblnotifications ORDER BY created_at DESC";
 } else {
     // Default for the dashboard widget: Fetch only UNREAD notifications
-    $sql = "SELECT notif_id, notif_msg, type, is_read, created_at FROM tblnotifications WHERE is_read = 0 ORDER BY created_at DESC";
+    $sql = "SELECT notif_id, notif_msg, type, is_read, meta, created_at FROM tblnotifications WHERE is_read = 0 ORDER BY created_at DESC";
 }
 
 // --- 4. Execute Query and Fetch Results ---
@@ -31,6 +31,12 @@ $res = $conn->query($sql);
 $notifs = [];
 if ($res) {
     while ($row = $res->fetch_assoc()) {
+        // Decode meta JSON if it exists
+        if (!empty($row['meta'])) {
+            $row['meta'] = json_decode($row['meta'], true); // true for associative array
+        } else {
+            $row['meta'] = null;
+        }
         $notifs[] = $row;
     }
     $res->free();

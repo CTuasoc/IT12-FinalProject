@@ -141,6 +141,7 @@ CREATE TABLE `tblnotifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+
 /*Data for the table `tblpaymenthistory` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

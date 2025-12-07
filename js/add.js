@@ -6,6 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const addForm = document.getElementById("addForm");
   const addFormMsg = document.getElementById("formMessage");
 
+  // Populate form with customer data if available
+  if (typeof window.customerData !== 'undefined' && window.customerData) {
+    if (window.customerData.firstname) {
+      document.querySelector('input[name="firstname"]').value = window.customerData.firstname;
+    }
+    if (window.customerData.lastname) {
+      document.querySelector('input[name="lastname"]').value = window.customerData.lastname;
+    }
+    if (window.customerData.businessname) {
+      document.querySelector('input[name="businessname"]').value = window.customerData.businessname;
+    }
+    if (window.customerData.phonenum) {
+      document.querySelector('input[name="phonenum"]').value = window.customerData.phonenum;
+    }
+    if (window.customerData.address) {
+      document.querySelector('input[name="address"]').value = window.customerData.address;
+    }
+  }
+
   // Calculate loan details
   function calculateLoan() {
     const loanAmount = parseFloat(loanAmountInput.value) || 0;
