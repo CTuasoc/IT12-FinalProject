@@ -1,0 +1,194 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #2D4882;
+    color: #CEE0F4;
+    margin: 0;
+    padding: 0;
+}
+
+/* NAVBAR */
+.nav-bar {
+    padding: 0px 20px;
+}
+
+.navi {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    margin: 0px 20px;
+    padding: 0;
+}
+
+.home {
+    height: 30px;
+    width: auto;
+    cursor: pointer;
+    color: white;
+}
+
+.logo {
+    height: 100px;
+    width: auto;
+}
+
+/* MAIN CONTAINER */
+.customer-container {
+    width: 95%;
+    margin: auto;
+    background: #0a1240;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* ACTION BUTTONS */
+.customer-action {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.customer-action .customer-btn,
+.customer-action .add-btn {
+    background: #1e2f68;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.customer-action button:hover {
+    color: #1e2f68;
+    background: #fff;
+}
+
+/* SEARCH BAR */
+.customer-action .search-bar {
+    margin-left: auto;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    width: 300px;
+}
+
+/* CONTENT SECTION */
+.content-section {
+    padding: 20px;
+    background: #242D50;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* FORM */
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+    font-weight: bold;
+}
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #384260;
+    color: #fff;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0a1240;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+thead {
+    background: #1e2f68;
+}
+
+thead th {
+    padding: 12px;
+    color: #fff;
+    text-align: left;
+}
+
+table td:nth-child(1), table th:nth-child(1) { width: 18%; }
+table td:nth-child(2), table th:nth-child(2) { width: 20%; }
+table td:nth-child(3), table th:nth-child(3) { width: 17%; }
+table td:nth-child(4), table th:nth-child(4) { width: 20%; }
+table td:nth-child(5), table th:nth-child(5) { width: 8%;  text-align: center; }
+table td:nth-child(5), table th:nth-child(5) { width: 8%;  text-align: center; }
+table td:nth-child(6), table th:nth-child(6) { width: 17%; text-align: center;} 
+
+tbody td {
+    padding: 12px;
+    color: #fff;
+    border-top: 1px solid #1e2f68;
+    vertical-align: middle;
+}
+
+/* BADGES */
+.status-badge {
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    display: inline-block;
+    min-width: 70px;
+    text-align: center;
+}
+
+.status-good {
+    background: #86f5a9;
+    border: 1px solid #47c16e;
+    color: #02020b;
+}
+
+.status-bad {
+    background: #fc9191;
+    border: 1px solid #e25a5a;
+    color: #02020b;
+}
+
+
+
+/* OPERATION BUTTONS */
+.operation-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    background-color: #2e42c4;
+    color: #ffffff;
+    font-size: 13px;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.operation-btn:hover {
+    background-color: #1e2f68;
+    transform: translateY(-1px);
+}
+
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  background-color: #0D1546;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.logout-btn:hover {
+  background-color: #CEE0F4;
+  color: #02020B;
+}

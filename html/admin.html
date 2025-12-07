@@ -1,76 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin | Rean Ramz Lending Corp</title>
-  <link rel="stylesheet" href="../css/admin.css"/>
-  <link rel="icon" href="../assets/logo.png">
+    <meta charset="UTF-8">
+    <title>Admin | Rean Ramz Lending Corp</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="../assets/logo.png">
 </head>
 <body>
-  <header>
-    <nav class="nav-bar">
-      <ul class="navi">
-        <li>
-          <a href="admin.html">
-            <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
-          </a>
-        </li>
-        <li>
-          <button id="logoutBtn" class="logout-btn">
-            <span>LOGOUT</span>
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </header>
+    <header>
+        <nav class="nav-bar">
+            <ul class="navi">
+                <li>
+                    <a href="admin.html">
+                        <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
+                    </a>
+                </li>
+                <li>
+                    <button id="logoutBtn" class="logout-btn">
+                        <span>LOGOUT</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Daily Statistics box -->
-  <div class="stats-box">
-    <div>
-      <h2>DAILY STATISTICS</h2>
-      <a>View more</a>
-    </div>
-    <div class="stats-graphics">
-      <img src="../assets/piechart.svg" alt="Pie chart">
-      <img src="../assets/barchart.svg" alt="Bar chart">
-    </div>
-  </div>
-
-  <div class="serno">
-    <!-- Services -->
-    <div class="services">
-      <h3>Services</h3>
-      <div class="service-items">
-        <a href="../php/add.php">
-          <div class="service-card">
-            <img src="../assets/addcustomer.svg" alt="Add customer">
-            <h4>ADD CUSTOMER RECORD</h4>
-          </div>
-        </a>
-        <a href="../php/loginstatus.php">
-          <div class="service-card">
-            <img src="../assets/login.svg" alt="Log-In">
-            <h4>LOG-IN STATUS</h4>
-          </div>
-        </a>
-        <a href="../php/check_rec.php">
-          <div class="service-card">
-            <img src="../assets/record.svg" alt="Customer records">
-            <h4>CHECK RECORDS</h4>
-          </div>
-        </a>
-      </div>
+    <div class="stats-box">
+        <div>
+            <h2>DAILY STATISTICS</h2>
+            <a href="#">View more</a>
+        </div>
+        <div class="stats-graphics">
+            <img src="../assets/piechart.svg" alt="Pie chart">
+            <img src="../assets/barchart.svg" alt="Bar chart">
+        </div>
     </div>
 
-    <!-- Notifications -->
-    <div class="notify">
-      <h3>Notifications</h3>
-      <div class="notify-box">No new notifications</div>
-      <div class="notify-box">System running smoothly</div>
-    </div>
-  </div>
+    <div class="serno">
+        <div class="services">
+            <h3>Services</h3>
+            <div class="service-items">
 
-  <!-- ✅ Link to JS file -->
-  <script src="../js/admin.js"></script>
+                <a href="../php/add.php">
+                    <div class="service-card">
+                        <img src="../assets/addcustomer.svg" alt="Add customer">
+                        <h4>ADD CUSTOMER RECORD</h4>
+                    </div>
+                </a>
+
+                <a href="../php/loginstatus.php">
+                    <div class="service-card">
+                        <img src="../assets/login.svg" alt="Log-In">
+                        <h4>LOG-IN STATUS</h4>
+                    </div>
+                </a>
+
+                <a href="../php/check_rec.php">
+                    <div class="service-card">
+                        <img src="../assets/record.svg" alt="Customer records">
+                        <h4>CHECK RECORDS</h4>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="notify">
+            <div class="notify-header">
+                <h3>Notifications</h3>
+                <button id="viewAllBtn" class="view-all-btn">View All</button>
+            </div>
+            </div>
+    </div>
+
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>All Notifications</h2>
+                <button id="clearAllNotifsBtn" class="clear-all-btn">Clear All</button> 
+                <span class="close-btn">&times;</span>
+            </div>
+            <div id="allNotificationsList" class="modal-body">
+                <div class="loading-message">Loading all notifications...</div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/admin.js"></script>
 </body>
 </html>

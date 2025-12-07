@@ -16,7 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        // Plain text password check (temporary, should hash later)
+        
+        // **FUNCTIONAL FIX:** Reverting to plain-text password check
+        // This allows old, unhashed passwords to work again.
         if ($password === $row['PASSWORD']) {
             $_SESSION['user'] = $row['EmpID'];
             $_SESSION['dept'] = $row['DeptID'];
@@ -40,9 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         } else {
+            // Password failed
             $error = "Invalid username or password";
         }
     } else {
+        // User not found
         $error = "Invalid username or password";
     }
 }

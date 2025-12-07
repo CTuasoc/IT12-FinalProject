@@ -115,6 +115,32 @@ CREATE TABLE `tblpaymenthistory` (
   CONSTRAINT `tblpaymenthistory_ibfk_2` FOREIGN KEY (`EmpID`) REFERENCES `tblemployees` (`EmpID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+DROP TABLE IF EXISTS `tblrequirements`;
+
+CREATE TABLE `tblrequirements` (
+  `ApplicationID` int(100) NOT NULL AUTO_INCREMENT,
+  `FirstName` varchar(50) NOT NULL,
+  `LastName` varchar(50) NOT NULL,
+  `BusinessName` varchar(100) NOT NULL,
+  `PhoneNumber` varchar(20) NOT NULL,
+  `CustomerAddress` varchar(150) NOT NULL,
+  `Status` varchar(20) NOT NULL DEFAULT 'Pending',
+  PRIMARY KEY (`ApplicationID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DROP TABLE IF EXISTS `tblnotifications`;
+
+CREATE TABLE `tblnotifications` (
+  `notif_id` INT NOT NULL AUTO_INCREMENT,
+  `notif_msg` TEXT NOT NULL,
+  `type` VARCHAR(50) NOT NULL DEFAULT 'info',
+  `is_read` TINYINT(1) NOT NULL DEFAULT 0,
+  `meta` JSON DEFAULT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`notif_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 /*Data for the table `tblpaymenthistory` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

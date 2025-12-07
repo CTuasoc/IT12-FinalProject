@@ -2,6 +2,8 @@
 include("config.php");
 header("Content-Type: application/json");
 
+// Ensure transaction support if needed. Using commit() below is the fix.
+
 try {
     if ($_SERVER["REQUEST_METHOD"] !== "POST") {
         throw new Exception("Invalid request");
@@ -17,7 +19,7 @@ try {
         throw new Exception("All fields are required");
     }
 
-    // (Optional) check duplicate email
+    // Check duplicate email
     $check = $conn->prepare("SELECT EmpID FROM tblEmployees WHERE Email=?");
     $check->bind_param("s", $email);
     $check->execute();
@@ -28,13 +30,26 @@ try {
 
     // Insert
     $stmt = $conn->prepare("INSERT INTO tblEmployees (FirstName, LastName, Email, PASSWORD, DeptID) VALUES (?, ?, ?, ?, ?)");
+    
+    // NOTE ON PASSWORD: You are currently storing passwords in plain text, which is insecure.
+    // The current code $password = trim($_POST["password"]) is used directly.
     $stmt->bind_param("ssssi", $firstname, $lastname, $email, $password, $deptid);
 
     if ($stmt->execute()) {
+        // --- FIX: Explicitly commit the transaction ---
+        if (method_exists($conn, 'commit')) {
+            $conn->commit(); 
+        }
+        
         echo json_encode(["success" => true]);
     } else {
+        // If the insert fails, attempt a rollback
+        if (method_exists($conn, 'rollback')) {
+            $conn->rollback();
+        }
         throw new Exception("Database insert failed: " . $stmt->error);
     }
 } catch (Exception $e) {
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
+?>
