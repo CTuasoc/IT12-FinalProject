@@ -342,7 +342,7 @@ body {
   border-radius: 10px;
   width: 100%;
   max-width: 800px;
-  max-height: none;
+  max-height: 90vh;
   min-height: 400px;
   display: flex;
   flex-direction: column;
@@ -409,7 +409,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: 0 20px 20px;
+  padding: 20px;
   min-height: 0;
 }
 
@@ -417,19 +417,24 @@ body {
   border-radius: 8px;
   border: 1px solid #2D4882;
   position: relative;
-  margin-top: 10px;
+  margin: 0;
   overflow: hidden;
-  max-height: 60vh;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .history-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: auto;
   margin: 0;
   border-spacing: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 100%;
 }
 
 .history-table th,
@@ -438,17 +443,43 @@ body {
   padding: 12px 10px;
   text-align: left;
   white-space: nowrap;
-  
+  flex: 1;
+}
+
+/* Distribute columns evenly */
+.history-table th:nth-child(1),
+.history-table td:nth-child(1) {
+  width: 25%;
+}
+
+.history-table th:nth-child(2),
+.history-table td:nth-child(2) {
+  width: 25%;
+}
+
+.history-table th:nth-child(3),
+.history-table td:nth-child(3) {
+  width: 25%;
+}
+
+.history-table th:nth-child(4),
+.history-table td:nth-child(4) {
+  width: 25%;
 }
 
 .history-table thead {
-  display: table;
+  display: block;
   width: 100%;
   table-layout: fixed;
   background-color: #1a2a5a;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.history-table thead tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 .history-table thead th {
@@ -456,15 +487,16 @@ body {
   color: #CEE0F4;
   border-bottom: 2px solid #2D4882;
   background-color: #1a2a5a;
-  position: sticky;
-  top: 0;
 }
 
 .history-table tbody {
   display: block;
   overflow-y: auto;
-  max-height: calc(60vh - 60px);
+  overflow-x: auto;
+  flex: 1;
   width: 100%;
+  min-height: 0;
+  max-height: 100%;
 }
 
 .history-table tbody tr {
@@ -509,56 +541,6 @@ body {
 .history-table tbody {
   scrollbar-width: thin;
   scrollbar-color: rgba(119, 154, 191, 0.5) rgba(45, 72, 130, 0.1);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 25px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #2D4882;
-  flex-shrink: 0;
-}
-
-.modal-header h3 {
-  font-size: 20px;
-  color: #CEE0F4;
-  margin: 0;
-}
-
-.modal-subtitle {
-  margin: 5px 0 0;
-  color: #779ABF;
-  font-size: 14px;
-}
-
-.close-modal {
-  background: none;
-  border: none;
-  color: #CEE0F4;
-  font-size: 28px;
-  cursor: pointer;
-  padding: 0 0 10px 10px;
-  line-height: 1;
-  margin-left: 15px;
-}
-
-.modal-body {
-  padding: 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 0;
-}
-
-.modal-loading,
-.modal-no-payments {
-  text-align: center;
-  padding: 40px 20px;
-  color: #CEE0F4;
-  font-size: 16px;
 }
 
 /* ========= RESPONSIVE DESIGN ========= */

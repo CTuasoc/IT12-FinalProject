@@ -185,7 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 historyTableBody.appendChild(row);
             });
 
-            modalHistoryContainer.style.display = "block";
+            // IMPORTANT: Keep the container as flex so its children can size properly and scroll
+            modalHistoryContainer.style.display = "flex";
         } catch (err) {
             modalLoading.style.display = "none";
             modalNoPayments.style.display = "block";
