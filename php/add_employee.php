@@ -28,12 +28,12 @@ try {
         throw new Exception("Email already exists");
     }
 
+    // --- FIXED: Hash password before storing ---
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    
     // Insert
     $stmt = $conn->prepare("INSERT INTO tblEmployees (FirstName, LastName, Email, PASSWORD, DeptID) VALUES (?, ?, ?, ?, ?)");
-    
-    // NOTE ON PASSWORD: You are currently storing passwords in plain text, which is insecure.
-    // The current code $password = trim($_POST["password"]) is used directly.
-    $stmt->bind_param("ssssi", $firstname, $lastname, $email, $password, $deptid);
+    $stmt->bind_param("ssssi", $firstname, $lastname, $email, $hashed_password, $deptid);
 
     if ($stmt->execute()) {
         // --- FIX: Explicitly commit the transaction ---

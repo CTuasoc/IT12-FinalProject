@@ -16,10 +16,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
+        $stored_password = $row['PASSWORD'];
         
-        // **FUNCTIONAL FIX:** Reverting to plain-text password check
-        // This allows old, unhashed passwords to work again.
-        if ($password === $row['PASSWORD']) {
+        // --- FIXED: Secure password check with backward compatibility ---
+        // Check if password is already hashed (starts with $2y$)
+        if (strpos($stored_password, '$2y$') === 0) {
+            // New hashed password check
+            $password_valid = password_verify($password, $stored_password);
+        } else {
+            // Old plain text check - then upgrade to hash
+            $password_valid = ($password === $stored_password);
+            
+            if ($password_valid) {
+                // Upgrade old password to hash
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+                $update_sql = "UPDATE tblEmployees SET PASSWORD=? WHERE EmpID=?";
+                $update_stmt = $conn->prepare($update_sql);
+                $update_stmt->bind_param("si", $hashed_password, $row['EmpID']);
+                $update_stmt->execute();
+            }
+        }
+
+        if ($password_valid) {
             $_SESSION['user'] = $row['EmpID'];
             $_SESSION['dept'] = $row['DeptID'];
 
