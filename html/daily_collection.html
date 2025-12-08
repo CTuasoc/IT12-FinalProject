@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Collections</title>
+    <link rel="stylesheet" href="../css/daily_collections.css"/>
+</head>
+<body>
+    <header>
+        <nav class="nav-bar">
+            <ul class="navi">
+            <li>
+                <a href="../php/{{HOME_PAGE}}">
+                <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
+                </a>
+            </li>
+            <li>
+                <a href="../php/{{HOME_PAGE}}">
+                <img class="home" src="../assets/home.svg" alt="Home">
+                </a>
+            </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <h1>Daily Collections</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-bar" placeholder="Search by customer name...">
+        </div>
+        <div class="filter-container">
+            <div class="filter-group">
+                <label for="monthFilter">Month:</label>
+                <select id="monthFilter" class="filter-dropdown">
+                    <option value="">All Months</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="yearFilter">Year:</label>
+                <select id="yearFilter" class="filter-dropdown">
+                    <option value="">All Years</option>
+                </select>
+            </div>
+        </div>
+        <div class="collection-list" id="collectionList">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Amount Collected</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../js/daily_collection.js"></script>
