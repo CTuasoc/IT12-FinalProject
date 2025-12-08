@@ -4,23 +4,22 @@
     <meta charset="UTF-8">
     <title>Admin | Rean Ramz Lending Corp</title>
     <link rel="stylesheet" href="../css/admin.css">
-    <link rel="icon" href="../assets/logo.png">
+    <link rel="icon" href="../assets/logo-dark.png">
 </head>
 <body>
     <header>
         <nav class="nav-bar">
-            <ul class="navi">
-                <li>
-                    <a href="admin.html">
-                        <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
-                    </a>
-                </li>
-                <li>
-                    <button id="logoutBtn" class="logout-btn">
-                        <span>LOGOUT</span>
-                    </button>
-                </li>
-            </ul>
+            <div class="nav-left">
+                <a href="admin.html">
+                    <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
+                </a>
+            </div>
+            <div class="nav-right">
+                <div id="themeToggle" class="theme-toggle"></div>
+                <button id="logoutBtn" class="logout-btn">
+                    <span>LOGOUT</span>
+                </button>
+            </div>
         </nav>
     </header>
 
@@ -42,21 +41,21 @@
 
                 <a href="../php/add.php">
                     <div class="service-card">
-                        <img src="../assets/addcustomer.svg" alt="Add customer">
+                        <img class="add-customer" src="../assets/addcustomer-light.png" alt="Add customer">
                         <h4>ADD CUSTOMER RECORD</h4>
                     </div>
                 </a>
 
                 <a href="../php/loginstatus.php">
                     <div class="service-card">
-                        <img src="../assets/login.svg" alt="Log-In">
+                        <img class="login-status" src="../assets/login-light.png" alt="Log-In">
                         <h4>LOG-IN STATUS</h4>
                     </div>
                 </a>
 
                 <a href="../php/check_rec.php">
                     <div class="service-card">
-                        <img src="../assets/record.svg" alt="Customer records">
+                        <img class="check-records" src="../assets/record-light.png" alt="Customer records">
                         <h4>CHECK RECORDS</h4>
                     </div>
                 </a>
@@ -87,5 +86,6 @@
         </div>
     </div>
     <script src="../js/admin.js"></script>
+    <script src="../js/dark_light_mode.js"></script>
 </body>
 </html>

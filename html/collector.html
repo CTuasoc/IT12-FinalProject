@@ -5,25 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Collector</title>
   <link rel="stylesheet" href="../css/collector.css">
-  <link rel="icon" href="../assets/logo.png">
+  <link rel="icon" href="../assets/logo-dark.png">
 </head>
 <body>
   <!-- Header -->
   <header>
     <nav class="nav-bar">
-      <ul class="navi">
-        <li>
-          <a href="collector.html">
-            <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
-          </a>
-        </li>
-        <li class="nav-right">
-          <button id="logoutBtn" class="logout-btn">
-            <span>LOGOUT</span>
-          </button>
-        </li>
-      </ul>
-    </nav>
+            <div class="nav-left">
+                <a href="admin.html">
+                    <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
+                </a>
+            </div>
+            <div class="nav-right">
+                <div id="themeToggle" class="theme-toggle"></div>
+                <button id="logoutBtn" class="logout-btn">
+                    <span>LOGOUT</span>
+                </button>
+            </div>
+        </nav>
   </header>
 
   <!-- Stats Section -->
@@ -55,19 +54,19 @@
       <div class="service-items">
         <a href="../php/payments.php">
           <div class="service-card">
-            <img src="../assets/wallet.svg" alt="wallet">
+            <img class="payment" src="../assets/wallet-light.png" alt="wallet">
             <h4>PAYMENT</h4>
           </div>
         </a>
         <a href="../php/collection_history.php">
           <div class="service-card">
-            <img src="../assets/record.svg" alt="Add customer">
+            <img class="collection-history" src="../assets/audit-light.png" alt="Add customer">
             <h4>COLLECTION HISTORY</h4>
           </div>
         </a>
         <a href="../php/check_rec.php">
           <div class="service-card">
-            <img src="../assets/record.svg" alt="checkrecords">
+            <img class="check-records" src="../assets/record-light.png" alt="checkrecords">
             <h4>CHECK RECORDS</h4>
           </div>
         </a>
@@ -75,5 +74,6 @@
     </div>
   </div>
   <script src="../js/admin.js"></script>
+  <script src="../js/dark_light_mode.js"></script>
 </body>
 </html>
