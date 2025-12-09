@@ -5,23 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Records | Rean Ramz Lending Corp</title>
   <link rel="stylesheet" href="../css/check_rec.css">
-  <link rel="icon" href="../assets/logo.png">
+  <link rel="icon" href="../assets/logo-dark.png">
 </head>
 <body>
 <header>
   <nav class="nav-bar">
-    <ul class="navi">
-      <li>
+    <div class="nav-left">
         <a href="../php/{{HOME_PAGE}}">
-          <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
+          <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
         </a>
-      </li>
-      <li>
-        <a href="../php/{{HOME_PAGE}}">
-          <img class="home" src="../assets/home.svg" alt="Home">
+      </div>
+      <div class="nav-right">
+        <div id="themeToggle" class="theme-toggle"></div>
+        <a class="home-btn" href="../php/{{HOME_PAGE}}">
+          <span>HOME</span>
         </a>
-      </li>
-    </ul>
+      </div>
   </nav>
 </header>
 
@@ -99,5 +98,6 @@
 </main>
 
 <script src="../js/check_rec.js"></script>
+<script src="../js/dark_light_mode.js"></script>
 </body>
 </html>

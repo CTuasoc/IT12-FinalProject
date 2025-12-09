@@ -5,25 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Record | Rean Ramz Lending Corp</title>
   <link rel="stylesheet" href="../css/add.css">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="icon" type="image/png" href="../assets/logo-dark.png">
 </head>
 
 <body>
 <header>
   <nav class="nav-bar">
-    <ul class="navi">
-      <li>
-        <a href="../php/admin.php">
-          <img class="logo" src="../assets/logo.png" alt="Rean Ramz Lending Corp">
-        </a>
-      </li>
-      <li>
-        <a href="../php/admin.php">
-          <img class="home" src="../assets/home.svg" alt="Home">
-        </a>
-      </li>
-    </ul>
-  </nav>
+            <div class="nav-left">
+                <a href="admin.html">
+                    <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
+                </a>
+            </div>
+            <div class="nav-right">
+                <div id="themeToggle" class="theme-toggle"></div>
+                <a href="../php/admin.php" class="home-btn">
+                    <span>HOME</span>
+                </a>
+            </div>
+        </nav>
 </header>
 
 <main class="container">
@@ -93,5 +92,6 @@
   </form>
 </main>
 <script src="../js/add.js"></script>
+<script src="../js/dark_light_mode.js"></script>
 </body>
 </html>
