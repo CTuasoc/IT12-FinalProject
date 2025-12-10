@@ -15,34 +15,54 @@ if ($conn->connect_error) {
     exit;
 }
 
-// Fetch payment history with customer information
+// Fetch all customers with their loan information
 $sql = "SELECT 
-            ph.PaymentID,
-            ph.CustomerID,
-            ph.Amount,
-            ph.PaymentDate,
-            ph.EmpID,
+            c.CustomerID,
             c.FirstName,
             c.LastName,
-            c.BusinessName
-        FROM tblpaymenthistory ph
-        LEFT JOIN tblCustomerAcc c ON ph.CustomerID = c.CustomerID
-        ORDER BY ph.PaymentID DESC";
+            c.BusinessName,
+            c.LoanAmount,
+            c.DueDate,
+            c.TotalAmount,
+            c.PerDay,
+            COALESCE(SUM(ph.Amount), 0) AS AmountPaidFromHistory,
+            COALESCE(COUNT(ph.PaymentID), 0) AS TermsCount
+        FROM tblCustomerAcc c
+        LEFT JOIN tblpaymenthistory ph ON c.CustomerID = ph.CustomerID
+        GROUP BY c.CustomerID
+        ORDER BY c.CustomerID DESC";
 
 $result = $conn->query($sql);
 
 $payments = [];
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        $customerName = $row["FirstName"] . " " . $row["LastName"];
+        $dueDate = $row["DueDate"];
+        $loanAmount = floatval($row["LoanAmount"]);
+
+        // Calculate interest (difference between total amount and loan amount)
+        $interest = floatval($row["TotalAmount"]) - $loanAmount;
+
+        // Terms should reflect actual payment records count (increments only when PAID recorded)
+        $terms = intval($row["TermsCount"]);
+
+        // Prefer the amount summed from the payment history for accuracy
+        $amountPaid = floatval($row["AmountPaidFromHistory"]);
+
         $payments[] = [
-            "PaymentID" => $row["PaymentID"],
             "CustomerID" => $row["CustomerID"],
-            "FirstName" => $row["FirstName"] ?? "N/A",
-            "LastName" => $row["LastName"] ?? "N/A",
-            "BusinessName" => $row["BusinessName"] ?? "N/A",
-            "Amount" => number_format(floatval($row["Amount"]), 2),
-            "PaymentDate" => $row["PaymentDate"],
-            "EmpID" => $row["EmpID"] ?? "N/A"
+            "CustomerName" => $customerName,
+            "BusinessName" => $row["BusinessName"],
+            "DateOfLoan" => $dueDate,
+            "Principal" => number_format($loanAmount, 2),
+            "Interest" => number_format($interest, 2),
+            "Terms" => $terms,
+            "DailyPayment" => number_format(floatval($row["PerDay"]), 2),
+            "LoanAmount" => $loanAmount,
+            "TotalAmount" => floatval($row["TotalAmount"]),
+            "AmountPaid" => $amountPaid,
+            "Balance" => floatval($row["TotalAmount"]) - $amountPaid
         ];
     }
 }

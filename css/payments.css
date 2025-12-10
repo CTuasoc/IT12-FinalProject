@@ -557,6 +557,49 @@ body.modal-open {
   color: #02020B;
 }
 
+.action-cell {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.action-btn:active {
+  transform: scale(0.98);
+}
+
+.paid-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.paid-btn:hover {
+  background-color: #45a049;
+  box-shadow: 0 2px 6px rgba(76, 175, 80, 0.4);
+}
+
+.pass-btn {
+  background-color: #2196F3;
+  color: white;
+}
+
+.pass-btn:hover {
+  background-color: #0b7dda;
+  box-shadow: 0 2px 6px rgba(33, 150, 243, 0.4);
+}
+
 .payment-table tbody::-webkit-scrollbar {
   width: 8px;
   height: 8px;
