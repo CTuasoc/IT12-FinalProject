@@ -6,23 +6,23 @@
     <title>Collection History</title>
     <link rel="stylesheet" href="../css/collection_history.css">
     <link rel="stylesheet" href="../css/loading.css">
+    <link rel="stylesheet" href="../css/filters.css">
     <link rel="icon" href="../assets/logo-dark.png">
 </head>
 <body>
 <header>
   <nav class="nav-bar">
-    <ul class="navi">
-      <li>
-        <a href="../php/{{HOME_PAGE}}">
-          <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
-        </a>
-      </li>
-      <li>
-        <a href="../php/{{HOME_PAGE}}">
-          <img class="home" src="../assets/home.svg" alt="Home">
-        </a>
-      </li>
-    </ul>
+    <div class="nav-left">
+      <a href="../php/{{HOME_PAGE}}">
+        <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
+      </a>
+    </div>
+    <div class="nav-right">
+      <div id="themeToggle" class="theme-toggle"></div>
+      <a class="home-btn" href="../php/{{HOME_PAGE}}">
+        <span>HOME</span>
+      </a>
+    </div>
   </nav>
 </header>
 
@@ -31,9 +31,97 @@
         <div class="page-header">
             <div class="header-top">
                 <div class="title-search-wrapper">
-                    <h2>COLLECTION HISTORY</h2>
+                    <div>
+                        <h2>COLLECTION HISTORY</h2>
+                        <p class="page-description">View collection history organized by customer and loan details.</p>
+                    </div>
+                    <div class="search-container">
+                        <div class="search-box">
+                            <input class="search" type="text" id="search" placeholder="Search customers...">
+                            <button class="filter-toggle" id="filterToggle">Filters ▼</button>
+                        </div>
+                        <div class="date-filter">
+                            <label for="paymentDateFilter">Collection date:</label>
+                            <input type="date" id="paymentDateFilter">
+                        </div>
+                        <div class="filters-panel" id="filtersPanel">
+                            <div class="filter-group">
+                                <h3>Filter by Status</h3>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="radio" name="status" value="all" checked>
+                                        <span>All Customers</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="status" value="paid">
+                                        <span>Fully Paid</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="status" value="unpaid">
+                                        <span>Unpaid/Partial</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="status" value="overdue">
+                                        <span>Overdue</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="filter-group">
+                                <h3>Filter by Name</h3>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="radio" name="nameType" value="both" checked>
+                                        <span>Both Names</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="nameType" value="first">
+                                        <span>First Name Only</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="nameType" value="last">
+                                        <span>Last Name Only</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="filter-group">
+                                <h3>Sort by</h3>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="radio" name="sort" value="name_asc" checked>
+                                        <span>Name (A-Z)</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="sort" value="name_desc">
+                                        <span>Name (Z-A)</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="sort" value="balance_high">
+                                        <span>Highest Balance</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="sort" value="balance_low">
+                                        <span>Lowest Balance</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="sort" value="newest">
+                                        <span>Newest First</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="radio" name="sort" value="oldest">
+                                        <span>Oldest First</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="filter-actions">
+                                <button class="filter-btn" id="applyFilters">Apply Filters</button>
+                                <button class="filter-btn secondary" id="clearFilters">Clear All</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <input type="text" id="searchInput" class="minimalist-search" placeholder="Search...">
                 <!-- Refresh Button -->
                 <div class="refresh-button-wrapper">
                     <button id="refreshBtn" class="refresh-btn-minimalist" title="Refresh collection history">
@@ -41,7 +129,6 @@
                     </button>
                 </div>
             </div>
-            <p class="page-description">View collection history organized by Customer ID. Click on a customer to view their detailed payment history.</p>
         </div>
 
         <!-- Collection History Container -->
@@ -50,49 +137,29 @@
             <div id="noCollectionsMessage" class="no-collections-message" style="display: none;">
                 No collection records found.
             </div>
-            <div id="collectionGrid" class="collection-grid" style="display: none;">
-                <!-- Customer cards will be inserted here -->
-            </div>   
-        </div>
-    </div>
-
-    <!-- Customer Payment History Modal -->
-    <div id="historyModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <h3 id="modalCustomerName">Customer Payment History</h3>
-                    <p id="modalCustomerInfo" class="modal-subtitle"></p>
-                </div>
-                <button class="close-modal" id="closeModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="modalLoading" class="modal-loading">Loading payment history...</div>
-                <div id="modalNoPayments" class="modal-no-payments" style="display: none;">
-                    No payment records found for this customer.
-                </div>
-                <div id="modalHistoryContainer" class="modal-history-container" style="display: none;">
-                    <div class="history-table-wrapper">
-                        <table class="history-table">
-                            <thead>
-                                <tr>
-                                    <th>Payment ID</th>
-                                    <th>Amount</th>
-                                    <th>Payment Date</th>
-                                    <th>Collected By</th>
-                                </tr>
-                            </thead>
-                            <tbody id="historyTableBody">
-                                <!-- Payment history will be inserted here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div id="collectionTableContainer" class="collection-table-wrapper" style="display: none;">
+                <table id="collectionTable" class="collection-table">
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Date of loan</th>
+                            <th>Principal</th>
+                            <th>interest</th>
+                            <th>terms</th>
+                            <th>daily payment</th>
+                            <th>action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="collectionTableBody">
+                        <!-- Collection rows will be inserted here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
     <script src="../js/collection_history.js"></script>
     <script src="../js/loading.js"></script>
+    <script src="../js/dark_light_mode.js"></script>
 </body>
 </html>

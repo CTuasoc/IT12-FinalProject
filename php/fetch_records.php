@@ -1,4 +1,5 @@
 <?php
+session_start();
 header("Content-Type: application/json");
 
 include("config.php");
@@ -8,6 +9,8 @@ $search = $_GET['search'] ?? '';
 $status = $_GET['status'] ?? 'all';
 $nameType = $_GET['nameType'] ?? 'both';
 $sort = $_GET['sort'] ?? 'name_asc';
+// Optional: specific collection date to check per-day payments
+$paymentDate = $_GET['paymentDate'] ?? '';
 
 // Build base query
 $sql = "SELECT 
@@ -19,7 +22,8 @@ $sql = "SELECT
             LoanAmount, 
             TotalAmount, 
             IFNULL(AmountPaid, 0) AS AmountPaid,
-            DueDate
+            DueDate,
+            PerDay
         FROM tblCustomerAcc 
         WHERE 1=1";
 
@@ -75,6 +79,7 @@ if ($result && $result->num_rows > 0) {
         $loanAmount = floatval($row["LoanAmount"]);
         $totalAmount = floatval($row["TotalAmount"]);
         $amountPaid = floatval($row["AmountPaid"]);
+        $perDay = isset($row["PerDay"]) ? floatval($row["PerDay"]) : 0;
         
         // Calculate balance
         $balance = $totalAmount - $amountPaid;
@@ -84,8 +89,9 @@ if ($result && $result->num_rows > 0) {
         $today = new DateTime();
         $isOverdue = $dueDate < $today && $balance > 0;
         
+        // Base customer data
         $customers[] = [
-            "CustomerID" => $row["CustomerID"],
+            "CustomerID" => (int)$row["CustomerID"],
             "FirstName" => $row["FirstName"],
             "LastName" => $row["LastName"],
             "BusinessName" => $row["BusinessName"],
@@ -95,10 +101,52 @@ if ($result && $result->num_rows > 0) {
             "DueDate" => $row["DueDate"],
             "AmountPaid" => number_format($amountPaid, 2),
             "TotalAmount" => number_format($totalAmount, 2),
+            "PerDay" => number_format($perDay, 2),
             "IsOverdue" => $isOverdue,
-            "IsPaid" => $balance <= 0
+            "IsPaid" => $balance <= 0,
+            // Defaults for per-day collection status; may be overridden below
+            "PaidOnDate" => false,
+            "AmountPaidOnDate" => number_format(0, 2)
         ];
     }
+}
+
+// If a specific payment date is provided, compute per-customer payments on that date
+if (!empty($paymentDate) && !empty($customers)) {
+    $date = $conn->real_escape_string($paymentDate);
+
+    // Use the logged-in employee (collector) if available
+    $empID = isset($_SESSION['user']) ? (int)$_SESSION['user'] : null;
+
+    $sqlPaid = "SELECT CustomerID, SUM(Amount) AS AmountOnDate
+                FROM tblpaymenthistory
+                WHERE PaymentDate = '$date'";
+
+    if ($empID) {
+        $sqlPaid .= " AND EmpID = $empID";
+    }
+
+    $sqlPaid .= " GROUP BY CustomerID";
+
+    $paidMap = [];
+    $paidResult = $conn->query($sqlPaid);
+    if ($paidResult && $paidResult->num_rows > 0) {
+        while ($row = $paidResult->fetch_assoc()) {
+            $cid = (int)$row['CustomerID'];
+            $paidMap[$cid] = floatval($row['AmountOnDate']);
+        }
+    }
+
+    // Update customers array with per-day payment info
+    foreach ($customers as &$cust) {
+        $cid = (int)$cust['CustomerID'];
+        if (isset($paidMap[$cid])) {
+            $amountOnDate = $paidMap[$cid];
+            $cust['PaidOnDate'] = true;
+            $cust['AmountPaidOnDate'] = number_format($amountOnDate, 2);
+        }
+    }
+    unset($cust);
 }
 
 echo json_encode($customers);
