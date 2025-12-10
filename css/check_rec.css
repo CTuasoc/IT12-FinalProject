@@ -111,7 +111,7 @@ body.dark-mode .theme-toggle {
   align-items: center; 
   gap: 6px; 
   cursor: pointer; 
-  color: var(--text-color); 
+  color: #ffffff; 
   font-size: 15px; 
   font-weight: bold; 
   text-decoration: none;
@@ -122,17 +122,6 @@ body.dark-mode .theme-toggle {
 .home-btn:hover, .theme-toggle:hover { 
   background-color: var(--link-hover);  
   border: 1px solid var(--link-color);
-}
-
-/* Responsive Navigation */
-@media (max-width: 768px) {
-    .logo {
-        height: 80px;
-    }
-    
-    .nav-bar {
-        padding: 10px 15px;
-    }
 }
 
 /* Main Content Container */
@@ -333,23 +322,6 @@ body.dark-mode .theme-toggle {
     margin: 0;
 }
 
-.search {
-    background-color: white;
-    border-radius: 8px;
-    border: 2px solid transparent;
-    padding: 10px 15px;
-    font-size: 0.95rem;
-    outline: none;
-    color: var(--card-hover-bg);
-    width: 100%;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.search:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(119, 154, 191, 0.2);
-}
-
 .records-wrapper {
     max-height: 600px;
     overflow-y: auto;
@@ -532,4 +504,344 @@ body.dark-mode .theme-toggle {
         margin-bottom: 20px;
         border: 1px solid #eee;
     }
+}
+
+/* Add these styles to the end of your existing CSS file */
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: block;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: var(--modal-bg);
+    margin: 5% auto;
+    padding: 0;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--header-bg);
+    border-radius: 12px 12px 0 0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.modal-close {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+    padding: 0 5px;
+}
+
+.modal-close:hover {
+    color: var(--link-hover);
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+/* Profile info in modal */
+.profile-info h1 {
+    margin: 0 0 15px 0;
+    font-size: 1.4rem;
+    color: var(--text-color);
+}
+
+/* Customer details in modal */
+.customer-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.detail-box .desc {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    opacity: 0.8;
+}
+
+.detail-box .info {
+    font-weight: 600;
+    font-size: 0.95rem;
+    word-break: break-word;
+}
+
+/* Stats in modal */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.stat-box {
+    background: var(--card-hover-bg);
+    text-align: center;
+    padding: 15px 10px;
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.stat-label {
+    color: var(--text-color);
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Modal footer */
+.modal-footer {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    width: 100%;
+}
+
+#formMessage {
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    width: 100%;
+    text-align: center;
+    min-height: 20px;
+}
+
+/* Success and error message styles */
+#formMessage.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #2e7d32;
+    border: 1px solid #4caf50;
+}
+
+#formMessage.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #d32f2f;
+    border: 1px solid #f44336;
+}
+
+/* Delete button styles - IMPORTANT: Make it visible! */
+.delete-btn {
+    background-color: var(--delete-btn-bg);
+    color: #ffffff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 180px;
+    display: inline-block !important; /* Force display */
+}
+
+.delete-btn:hover {
+    background-color: var(--delete-btn-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-btn:active {
+    transform: translateY(0);
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(119, 154, 191, 0.3);
+}
+
+.records-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.records-table thead {
+    background-color: var(--card-hover-bg);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.records-table th {
+    padding: 15px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.records-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(119, 154, 191, 0.2);
+    vertical-align: middle;
+}
+
+.records-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.records-table tbody tr:hover {
+    background-color: var(--card-hover-bg);
+}
+
+.records-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Action buttons in table */
+.table-action-btn {
+    background-color: var(--link-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.table-action-btn:hover {
+    background-color: var(--link-hover);
+    transform: translateY(-1px);
+}
+
+/* No records message */
+.no-records-message {
+    text-align: center;
+    padding: 40px;
+    font-size: 16px;
+    color: var(--text-color);
+    margin: 20px 0;
+    background-color: var(--card-hover-bg);
+    border-radius: 8px;
+}
+
+/* Remove old records grid styles */
+.records {
+    display: block; /* Change from grid to block for table */
+}
+
+.record-card {
+    display: none; /* Hide old cards */
+}
+
+/* Ensure the records wrapper still works */
+.records-wrapper {
+    max-height: 600px;
+    overflow-y: auto;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+/* Remove ALL the column hiding rules - we only have 2 columns now */
+
+/* Delete these sections entirely: */
+@media (max-width: 768px) {
+  /* Remove all .records-table th:nth-child() and td:nth-child() rules */
+}
+
+@media (max-width: 576px) {
+  /* Remove all .records-table th:nth-child() and td:nth-child() rules */
+}
+
+/* Add this instead to make sure both columns work well on mobile: */
+@media (max-width: 768px) {
+  .records-table th,
+  .records-table td {
+    padding: 10px 8px;
+  }
+  
+  .records-table th:first-child,
+  .records-table td:first-child {
+    width: 70%; /* Give more space to name on mobile */
+  }
+  
+  .records-table th:last-child,
+  .records-table td:last-child {
+    width: 30%; /* Less space for action button */
+    text-align: center;
+  }
+  
+  .table-action-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .records-table th:first-child,
+  .records-table td:first-child {
+    width: 60%; /* Even more space for name on very small screens */
+  }
+  
+  .records-table th:last-child,
+  .records-table td:last-child {
+    width: 40%;
+  }
+  
+  .table-action-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
 }

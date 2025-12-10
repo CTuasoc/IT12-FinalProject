@@ -2,7 +2,7 @@
 session_start();
 include("../php/config.php");
 
-if (!isset($_SESSION['user']) || $_SESSION['dept'] != 1) {
+if (!isset($_SESSION['user']) || $_SESSION['dept'] != 3) {
     header("Location: login.php");
     exit();
 }

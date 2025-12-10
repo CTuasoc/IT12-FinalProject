@@ -6,13 +6,6 @@
     --link-color: #0e61ba;
     --link-hover: #003e81;
     --border-color: #02020B;
-    --notify-bg: #e6f2ff;
-    --modal-bg: #fefefe;
-    --modal-border: #888;
-    --action-btn-bg: #0e61ba;
-    --action-btn-hover: #003e81;
-    --delete-btn-bg: #dc3545;
-    --delete-btn-hover: #c82333;
 }
 
 /* --- DARK MODE --- */
@@ -23,14 +16,7 @@
     --header-bg: #001631;
     --link-color: #0e61ba;
     --link-hover: #003e81;
-    --border-color: #e6f2ff;
-    --notify-bg: #002552;
-    --modal-bg: #0c1a33;
-    --modal-border: #ffffff;
-    --action-btn-bg: #0e61ba;
-    --action-btn-hover: #003e81;
-    --delete-btn-bg: #dc3545;
-    --delete-btn-hover: #c82333;
+    --border-color: #87c1ff;
 }
 
 body {
@@ -84,9 +70,17 @@ body:not(.dark-mode) .theme-toggle {
     background-image: url("../assets/dark_mode.png");
 }
 
+.logo {
+    content: url("../assets/logo-light.png");
+}
+
 /* Dark Mode*/
 body.dark-mode .theme-toggle {
     background-image: url("../assets/light_mode.png");
+}
+
+body.dark-mode .logo {
+    content: url("../assets/logo-dark.png");
 }
 
 .home-btn { 
@@ -129,13 +123,15 @@ body.dark-mode .theme-toggle {
     margin: 0;
 }
 
-.input-info{
+.input-info, .loan-info{
     display: flex;
+    flex-wrap: wrap;    
+    gap: 10px 20px;
+    flex-direction: column;
 }
 
 .detail-box{
-    padding: 20px;
-
+    padding: 10px 15px;
 }
 
 .detail-box p{
@@ -147,7 +143,7 @@ body.dark-mode .theme-toggle {
     width: 100%;            
     box-sizing: border-box; 
     border-radius: 9px;
-    border: 1px solid var(--link-color);
+    border: 1px solid var(--border-color);
     outline: none;
     padding: 10px;
     height: 30px;
@@ -156,25 +152,32 @@ body.dark-mode .theme-toggle {
 .loan-info{
     background: var(--card-bg);
     border-radius: 15px;
-    margin: 30px auto;
+    margin: 10px auto;
     padding: 30px 50px;
     width: 90%;
     border: 1px solid var(--link-color);
 }
 
 .loan-box{
-    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;    
+    gap: 10px 20px;
+}
+
+.loan-box p{
+    margin-bottom: 0px;
 }
 
 .loan-box input{
-    background: white;
-    width: 200px;
-    height: 30px;
+    background: #ffffff;
+    width: 100%;            
+    box-sizing: border-box; 
     border-radius: 9px;
-    border: none;
+    border: 1px solid var(--border-color);
+    margin-top: 0;
     outline: none;
     padding: 10px;
-    border: 1px solid var(--link-color);
+    height: 30px;
 }
 
 .bold{
@@ -203,4 +206,25 @@ body.dark-mode .theme-toggle {
     color: #ffffff;
     box-shadow: 0 2px 4px (#02020B);
     transform: scale(1.09);
+}
+
+@media (max-width: 768px) {
+    .customer-info, .loan-info {
+        padding: 20px;
+    }
+
+    .input-info {
+        flex-direction: column;
+    }
+
+    .loan-box input {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .btn {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
 }

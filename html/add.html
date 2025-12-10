@@ -5,20 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Record | Rean Ramz Lending Corp</title>
   <link rel="stylesheet" href="../css/add.css">
+  <link rel="stylesheet" href="../css/loading.css">
   <link rel="icon" type="image/png" href="../assets/logo-dark.png">
 </head>
 
 <body>
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-content">
+    <div class="loading-logo">
+      <img src="../assets/logo-light.png" alt="Rean Ramz Lending Corp" class="loading-logo-img">
+    </div>
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading...</div>
+  </div>
+</div>
 <header>
   <nav class="nav-bar">
             <div class="nav-left">
-                <a href="admin.html">
+                <a href="../php/collector.php">
                     <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
                 </a>
             </div>
             <div class="nav-right">
                 <div id="themeToggle" class="theme-toggle"></div>
-                <a href="../php/admin.php" class="home-btn">
+                <a href="../php/collector.php" class="home-btn">
                     <span>HOME</span>
                 </a>
             </div>
@@ -73,7 +83,7 @@
         </div>
         <div class="loan-box">
           <p>Interest Rate</p>
-          <p class="bold">5%</p>
+          <input type="text" id="interestrate" name="interestrate" value="5%" readonly>
         </div>
         <div class="loan-box">
           <p>Total Amount</p>
@@ -93,5 +103,6 @@
 </main>
 <script src="../js/add.js"></script>
 <script src="../js/dark_light_mode.js"></script>
+<script src="../js/loading.js"></script>
 </body>
 </html>

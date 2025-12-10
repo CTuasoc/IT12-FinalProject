@@ -5,33 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Records | Rean Ramz Lending Corp</title>
   <link rel="stylesheet" href="../css/check_rec.css">
+  <link rel="stylesheet" href="../css/loading.css">
+  <link rel="stylesheet" href="../css/filters.css">
   <link rel="icon" href="../assets/logo-dark.png">
 </head>
 <body>
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-content">
+    <div class="loading-logo">
+      <img src="../assets/logo-light.png" alt="Rean Ramz Lending Corp" class="loading-logo-img">
+    </div>
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading...</div>
+  </div>
+</div>
 <header>
   <nav class="nav-bar">
     <div class="nav-left">
-        <a href="../php/{{HOME_PAGE}}">
-          <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
-        </a>
-      </div>
-      <div class="nav-right">
-        <div id="themeToggle" class="theme-toggle"></div>
-        <a class="home-btn" href="../php/{{HOME_PAGE}}">
-          <span>HOME</span>
-        </a>
-      </div>
+      <a href="../php/collector.php">
+        <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
+      </a>
+    </div>
+    <div class="nav-right">
+      <div id="themeToggle" class="theme-toggle"></div>
+      <a class="home-btn" href="../php/collector.php">
+        <span>HOME</span>
+      </a>
+    </div>
   </nav>
 </header>
 
 <main>
-  <!-- Customer Record Section -->
-  <section class="rec-container">
-    <div class="rec-content">
-      <div class="header-row">
+  <!-- Customer Record Modal -->
+  <div id="customerModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Customer Record</h2>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
         <div class="profile-info">
-          <h1>Customer Record</h1>
-          <h2 id="cust-name">Select a customer</h2>
+          <h1 id="cust-name">Select a customer</h1>
           <div class="customer-details">
             <div class="detail-box">
               <p class="desc">Business Name</p>
@@ -49,49 +63,140 @@
               <p class="desc">Due Date</p>
               <p class="info" id="cust-duedate">---</p>
             </div>
-            <div class="detail-box">
-              <button class="delete-btn" id="deleteBtn" style="display:none;">Delete Record</button>
-            </div>
-            <div class="detail-box">
-              <p id="formMessage" style="margin-top:10px;"></p>
-            </div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <p class="stat-value" id="cust-amount">0</p>
+            <p class="stat-label">Amount</p>
+          </div>
+          <div class="stat-box">
+            <p class="stat-value" id="cust-total">0</p>
+            <p class="stat-label">Total Amount</p>
+          </div>
+          <div class="stat-box">
+            <p class="stat-value" id="cust-balance">0</p>
+            <p class="stat-label">Balance</p>
+          </div>
+          <div class="stat-box">
+            <p class="stat-value" id="cust-payment">0</p>
+            <p class="stat-label">Current Payment</p>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="modal-actions">
+            <button class="delete-btn" id="deleteBtn">Delete Customer</button>
+            <div id="formMessage"></div>
           </div>
         </div>
       </div>
-
-      <div class="stats-row">
-        <div class="stat-box">
-          <p class="stat-value" id="cust-amount">0</p>
-          <p class="stat-label">Amount</p>
-        </div>
-        <div class="stat-box">
-          <p class="stat-value" id="cust-total">0</p>
-          <p class="stat-label">Total Amount</p>
-        </div>
-        <div class="stat-box">
-          <p class="stat-value" id="cust-balance">0</p>
-          <p class="stat-label">Balance</p>
-        </div>
-        <div class="stat-box">
-          <p class="stat-value" id="cust-payment">0</p>
-          <p class="stat-label">Current Payment</p>
-        </div>
-      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Search Record Section -->
   <section class="container">
     <div class="content">
-      <h1>Search Record</h1>
-      <input class="search" type="text" id="search" placeholder="Search">
-    </div>
-    <div class="records-wrapper">
-      <div id="noRecordsMessage" class="no-records-message" style="display: none;">
-        No customer record found.
+      <h1>Customer Records</h1>
+      <div class="search-container">
+        <div class="search-box">
+          <input class="search" type="text" id="search" placeholder="Search customers...">
+          <button class="filter-toggle" id="filterToggle">Filters ▼</button>
+        </div>
+        <div class="filters-panel" id="filtersPanel">
+          <div class="filter-group">
+            <h3>Filter by Status</h3>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="radio" name="status" value="all" checked>
+                <span>All Customers</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="status" value="paid">
+                <span>Fully Paid</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="status" value="unpaid">
+                <span>Unpaid/Partial</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="status" value="overdue">
+                <span>Overdue</span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="filter-group">
+            <h3>Filter by Name</h3>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="radio" name="nameType" value="both" checked>
+                <span>Both Names</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="nameType" value="first">
+                <span>First Name Only</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="nameType" value="last">
+                <span>Last Name Only</span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="filter-group">
+            <h3>Sort by</h3>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="radio" name="sort" value="name_asc" checked>
+                <span>Name (A-Z)</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="sort" value="name_desc">
+                <span>Name (Z-A)</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="sort" value="balance_high">
+                <span>Highest Balance</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="sort" value="balance_low">
+                <span>Lowest Balance</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="sort" value="newest">
+                <span>Newest First</span>
+              </label>
+              <label class="filter-option">
+                <input type="radio" name="sort" value="oldest">
+                <span>Oldest First</span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="filter-actions">
+            <button class="filter-btn" id="applyFilters">Apply Filters</button>
+            <button class="filter-btn secondary" id="clearFilters">Clear All</button>
+          </div>
+        </div>
       </div>
-      <div class="records" id="records">
-        <!-- JS will inject records from PHP -->
+    </div>
+</section>
+    <div class="records-wrapper">
+      <div class="table-container">
+      <table class="records-table" id="recordsTable">
+        <thead>
+          <tr>
+            <th>Customer Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="records">
+        </tbody>
+      </table>
+      <div id="noRecordsMessage" class="no-records-message" style="display: none;">
+        No customer records found.
+      </div>
       </div>
     </div>
   </section>
@@ -99,5 +204,6 @@
 
 <script src="../js/check_rec.js"></script>
 <script src="../js/dark_light_mode.js"></script>
+<script src="../js/loading.js"></script>
 </body>
 </html>

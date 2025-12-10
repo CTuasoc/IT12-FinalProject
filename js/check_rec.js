@@ -1,106 +1,355 @@
+// check_rec.js - Complete working version with amount display fix
 document.addEventListener("DOMContentLoaded", () => {
-  const recordsDiv = document.getElementById("records");
+  const recordsTbody = document.getElementById("records");
   const searchInput = document.getElementById("search");
   const deleteBtn = document.getElementById("deleteBtn");
   const addFormMsg = document.getElementById("formMessage");
+  const modal = document.getElementById("customerModal");
+  const modalClose = document.querySelector(".modal-close");
   let currentCustomerID = null;
+  let currentCustomerName = "";
 
-  // Helper: display message
-  function showMessage(message, color = "black") {
-    addFormMsg.style.color = color;
+  // Filter variables
+  let currentFilters = {
+    search: '',
+    status: 'all',
+    nameType: 'both',
+    sort: 'name_asc'
+  };
+
+  // Helper: display message with styling
+  function showMessage(message, type = "info") {
     addFormMsg.textContent = message;
-  }
-
-  // Fetch and display all records
-  async function loadRecords() {
-    try {
-      const res = await fetch("../php/fetch_records.php");
-      const data = await res.json();
-
-      recordsDiv.innerHTML = "";
-      const noRecordsMsg = document.getElementById("noRecordsMessage");
-
-      if (!Array.isArray(data) || data.length === 0) {
-        noRecordsMsg.style.display = "block";
-        return;
-      }
-
-      noRecordsMsg.style.display = "none";
-
-      data.forEach(cust => {
-        const card = document.createElement("div");
-        card.className = "record-card";
-        card.innerHTML = `
-          <div class="record-header">
-            <p class="Name">${cust.FirstName} ${cust.LastName}</p>
-            <button class="display" data-id="${cust.CustomerID}">Display</button>
-          </div>
-          <div class="details">
-            <div class="record-detail">
-              <p class="desc">Amount</p>
-              <p class="info">₱${cust.LoanAmount}</p>
-            </div>
-            <div class="record-detail">
-              <p class="desc">Balance</p>
-              <p class="info">₱${cust.Balance}</p>
-            </div>
-          </div>
-        `;
-        recordsDiv.appendChild(card);
-      });
-
-      attachDisplayEvents();
-      showMessage(""); // clear messages after load
-    } catch (err) {
-      showMessage(`Error loading records: ${err.message}`, "red");
+    addFormMsg.className = ""; // Clear existing classes
+    
+    if (type === "success") {
+      addFormMsg.classList.add("success");
+    } else if (type === "error") {
+      addFormMsg.classList.add("error");
+    }
+    
+    // Auto-hide success messages after 3 seconds
+    if (type === "success") {
+      setTimeout(() => {
+        if (addFormMsg.textContent === message) {
+          addFormMsg.textContent = "";
+          addFormMsg.className = "";
+        }
+      }, 3000);
     }
   }
 
-  // Attach display button events
-  function attachDisplayEvents() {
-    document.querySelectorAll(".display").forEach(btn => {
-      btn.addEventListener("click", async () => {
-        const id = btn.dataset.id;
-        currentCustomerID = id;
-        const res = await fetch(`../php/fetch_customer.php?id=${id}`);
-        const cust = await res.json();
+  // Modal functions
+  function openModal() {
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
 
-        if (!cust.error) {
-          document.getElementById("cust-name").textContent = cust.FirstName + " " + cust.LastName;
-          document.getElementById("cust-business").textContent = cust.BusinessName;
-          document.getElementById("cust-phone").textContent = cust.PhoneNum;
-          document.getElementById("cust-address").textContent = cust.Address;
-          document.getElementById("cust-amount").textContent ="₱" + cust.LoanAmount;
-          document.getElementById("cust-total").textContent = "₱" + cust.TotalAmount;
-          // Use the Balance field from PHP which is already calculated correctly
-          document.getElementById("cust-balance").textContent = "₱" + cust.Balance;
-          document.getElementById("cust-duedate").textContent = cust.DueDate;
-          document.getElementById("cust-payment").textContent = "₱" + cust.AmountPaid;
-          showMessage("Customer loaded successfully.", "green");
-        } else {
-          showMessage("Error loading customer.", "red");
+  function closeModal() {
+    modal.classList.remove("show");
+    document.body.style.overflow = "auto";
+    showMessage(""); // Clear messages
+  }
+
+  // Close modal when clicking X or outside modal
+  modalClose.addEventListener("click", closeModal);
+  
+  window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Close modal with Escape key
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.classList.contains("show")) {
+      closeModal();
+    }
+  });
+
+  // Format date for display
+  function formatDate(dateString) {
+    if (!dateString || dateString === "0000-00-00") return "---";
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-PH', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
+  // Format currency for display - Fixed to handle string or number
+  function formatCurrency(amount) {
+    // Convert to number if it's a string
+    let num;
+    if (typeof amount === 'string') {
+      // Remove currency symbols, commas, and spaces
+      num = parseFloat(amount.replace(/[^\d.-]/g, ''));
+    } else {
+      num = parseFloat(amount || 0);
+    }
+    
+    // Check if it's a valid number
+    if (isNaN(num)) {
+      console.warn("Invalid amount for formatting:", amount);
+      return "₱0.00";
+    }
+    
+    return `₱${num.toLocaleString('en-PH', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
+  }
+
+  // Initialize filter functionality
+  function initializeFilters() {
+    const filterToggle = document.getElementById("filterToggle");
+    const filtersPanel = document.getElementById("filtersPanel");
+    const applyFiltersBtn = document.getElementById("applyFilters");
+    const clearFiltersBtn = document.getElementById("clearFilters");
+    
+    if (!filterToggle) return; // Exit if no filter elements
+    
+    // Toggle filters panel
+    filterToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      filtersPanel.classList.toggle('show');
+      filterToggle.classList.toggle('active');
+    });
+    
+    // Close filters when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!filtersPanel.contains(e.target) && !filterToggle.contains(e.target)) {
+        filtersPanel.classList.remove('show');
+        filterToggle.classList.remove('active');
+      }
+    });
+    
+    // Apply filters
+    applyFiltersBtn.addEventListener('click', () => {
+      updateCurrentFilters();
+      loadRecords();
+      filtersPanel.classList.remove('show');
+      filterToggle.classList.remove('active');
+    });
+    
+    // Clear all filters
+    clearFiltersBtn.addEventListener('click', () => {
+      clearFilters();
+      loadRecords();
+      filtersPanel.classList.remove('show');
+      filterToggle.classList.remove('active');
+    });
+    
+    // Search input with debounce
+    let searchTimeout;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        currentFilters.search = searchInput.value.trim();
+        loadRecords();
+      }, 300);
+    });
+  }
+
+  function updateCurrentFilters() {
+    currentFilters.search = searchInput.value.trim();
+    currentFilters.status = document.querySelector('input[name="status"]:checked').value;
+    currentFilters.nameType = document.querySelector('input[name="nameType"]:checked').value;
+    currentFilters.sort = document.querySelector('input[name="sort"]:checked').value;
+  }
+
+  function clearFilters() {
+    // Reset form inputs
+    const statusAll = document.querySelector('input[name="status"][value="all"]');
+    const nameTypeBoth = document.querySelector('input[name="nameType"][value="both"]');
+    const sortNameAsc = document.querySelector('input[name="sort"][value="name_asc"]');
+    
+    if (statusAll) statusAll.checked = true;
+    if (nameTypeBoth) nameTypeBoth.checked = true;
+    if (sortNameAsc) sortNameAsc.checked = true;
+    
+    searchInput.value = '';
+    
+    // Reset current filters
+    currentFilters = {
+      search: '',
+      status: 'all',
+      nameType: 'both',
+      sort: 'name_asc'
+    };
+  }
+
+  // Fetch and display all records in table
+  async function loadRecords() {
+    try {
+      // Build query string with filters
+      const params = new URLSearchParams();
+      params.append('search', currentFilters.search);
+      params.append('status', currentFilters.status);
+      params.append('nameType', currentFilters.nameType);
+      params.append('sort', currentFilters.sort);
+      
+      const res = await fetch(`../php/fetch_records.php?${params.toString()}`);
+      const data = await res.json();
+
+      recordsTbody.innerHTML = "";
+      const noRecordsMsg = document.getElementById("noRecordsMessage");
+
+      if (!Array.isArray(data) || data.length === 0) {
+        if (noRecordsMsg) noRecordsMsg.style.display = "block";
+        return;
+      }
+
+      if (noRecordsMsg) noRecordsMsg.style.display = "none";
+
+      data.forEach(cust => {
+        const row = document.createElement("tr");
+        row.className = "record-row";
+        
+        // Add status classes
+        if (cust.IsOverdue) {
+          row.classList.add('overdue');
+        } else if (cust.IsPaid) {
+          row.classList.add('paid');
+        }
+        
+        row.innerHTML = `
+          <td>
+            <strong>${cust.FirstName} ${cust.LastName}</strong>
+            ${cust.IsOverdue ? '<span class="status-badge overdue-badge">OVERDUE</span>' : ''}
+            ${cust.IsPaid ? '<span class="status-badge paid-badge">PAID</span>' : ''}
+          </td>
+          <td>
+            <button class="table-action-btn" data-id="${cust.CustomerID}">
+              View Details
+            </button>
+          </td>
+        `;
+        recordsTbody.appendChild(row);
+      });
+
+      // Debug logging
+      console.log("Records loaded:", data.length);
+      console.log("Buttons found:", document.querySelectorAll(".table-action-btn").length);
+      
+      attachDisplayEvents();
+    } catch (err) {
+      console.error("Error loading records:", err);
+      showMessage(`Error loading records: ${err.message}`, "error");
+    }
+  }
+
+  // Attach display button events to table rows
+  function attachDisplayEvents() {
+    const buttons = document.querySelectorAll(".table-action-btn");
+    console.log("Attaching events to", buttons.length, "buttons");
+    
+    buttons.forEach(btn => {
+      // Remove any existing listeners to prevent duplicates
+      const newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      
+      newBtn.addEventListener("click", async (e) => {
+        e.stopPropagation(); // Prevent event bubbling
+        const id = newBtn.dataset.id;
+        console.log("Button clicked for ID:", id);
+        currentCustomerID = id;
+        
+        try {
+          const res = await fetch(`../php/fetch_customer.php?id=${id}`);
+          const cust = await res.json();
+          
+          console.log("Customer data received:", cust); // Debug log
+
+          if (!cust.error) {
+            currentCustomerName = `${cust.FirstName} ${cust.LastName}`;
+            
+            // Debug the amount values
+            console.log("Amount values before formatting:", {
+              loanAmount: cust.LoanAmount,
+              totalAmount: cust.TotalAmount,
+              amountPaid: cust.AmountPaid,
+              balance: cust.Balance,
+              types: {
+                loan: typeof cust.LoanAmount,
+                total: typeof cust.TotalAmount,
+                paid: typeof cust.AmountPaid,
+                balance: typeof cust.Balance
+              }
+            });
+            
+            // Update modal content - Use raw numbers
+            document.getElementById("cust-name").textContent = currentCustomerName;
+            document.getElementById("cust-business").textContent = cust.BusinessName || "---";
+            document.getElementById("cust-phone").textContent = cust.PhoneNum || "---";
+            document.getElementById("cust-address").textContent = cust.Address || "---";
+            
+            // Format and display amounts - handle both raw numbers and formatted strings
+            document.getElementById("cust-amount").textContent = formatCurrency(cust.LoanAmount || cust.LoanAmountFormatted || 0);
+            document.getElementById("cust-total").textContent = formatCurrency(cust.TotalAmount || cust.TotalAmountFormatted || 0);
+            document.getElementById("cust-balance").textContent = formatCurrency(cust.Balance || cust.BalanceFormatted || 0);
+            document.getElementById("cust-duedate").textContent = formatDate(cust.DueDate);
+            document.getElementById("cust-payment").textContent = formatCurrency(cust.AmountPaid || cust.AmountPaidFormatted || 0);
+            
+            // Show what was actually displayed
+            console.log("Displayed values:", {
+              amount: document.getElementById("cust-amount").textContent,
+              total: document.getElementById("cust-total").textContent,
+              balance: document.getElementById("cust-balance").textContent,
+              payment: document.getElementById("cust-payment").textContent
+            });
+            
+            // ALWAYS show delete button (collector-only system)
+            deleteBtn.style.display = "inline-block";
+            
+            // Clear any previous messages
+            showMessage("");
+            
+            // Open modal
+            openModal();
+          } else {
+            showMessage("Error loading customer details.", "error");
+          }
+        } catch (error) {
+          console.error("Error loading customer data:", error);
+          showMessage("Failed to load customer data.", "error");
+        }
+      });
+    });
+
+    // Make entire row clickable
+    document.querySelectorAll(".record-row").forEach(row => {
+      row.style.cursor = "pointer";
+      row.addEventListener("click", (e) => {
+        if (!e.target.classList.contains("table-action-btn")) {
+          const btn = row.querySelector(".table-action-btn");
+          if (btn) btn.click();
         }
       });
     });
   }
 
-  // Admin-only delete with password confirmation
-  if (typeof isAdmin !== "undefined" && isAdmin) {
-    deleteBtn.style.display = "inline-block";
-    deleteBtn.addEventListener("click", async () => {
-      if (!currentCustomerID) {
-        showMessage("Please select a customer first.", "red");
-        return;
-      }
+  // Delete customer function - ALWAYS ENABLED for collectors
+  deleteBtn.addEventListener("click", async () => {
+    if (!currentCustomerID) {
+      showMessage("Please select a customer first.", "error");
+      return;
+    }
 
-      const password = prompt("Enter your password to confirm deletion:");
-      if (!password) {
-        showMessage("Deletion canceled. No password entered.", "red");
-        return;
-      }
+    if (!confirm(`Are you sure you want to delete ${currentCustomerName}? This action cannot be undone.`)) {
+      showMessage("Deletion cancelled.", "info");
+      return;
+    }
 
-      const res = await fetch("delete_customer.php", {
+    const password = prompt(`Enter your password to confirm deletion of ${currentCustomerName}:`);
+    if (!password) {
+      showMessage("Deletion canceled. No password entered.", "error");
+      return;
+    }
 
+    try {
+      const res = await fetch("../php/delete-customer.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `id=${encodeURIComponent(currentCustomerID)}&password=${encodeURIComponent(password)}`
@@ -109,30 +358,39 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
 
       if (data.success) {
-        showMessage(data.message, "green");
-        loadRecords();
+        showMessage(data.message, "success");
+        setTimeout(() => {
+          closeModal();
+          loadRecords(); // Refresh the table
+        }, 1500);
       } else {
-        showMessage(data.message, "red");
+        showMessage(data.message, "error");
       }
-    });
-  }
-
-  // Search filter
-  searchInput.addEventListener("input", () => {
-    const term = searchInput.value.toLowerCase();
-    const noRecordsMsg = document.getElementById("noRecordsMessage");
-    let visibleCount = 0;
-
-    document.querySelectorAll(".record-card").forEach(card => {
-      const name = card.querySelector(".Name").textContent.toLowerCase();
-      const isVisible = name.includes(term);
-      card.style.display = isVisible ? "block" : "none";
-      if (isVisible) visibleCount++;
-    });
-
-    // Show "No customer records found" message if no results match
-    noRecordsMsg.style.display = visibleCount === 0 ? "block" : "none";
+    } catch (error) {
+      showMessage("Failed to delete customer. Please try again.", "error");
+    }
   });
 
-  loadRecords();
+  // Initialize everything
+  function initialize() {
+    console.log("Initializing check_rec.js");
+    
+    // Initialize filters
+    initializeFilters();
+    
+    // Load initial records
+    loadRecords();
+    
+    // Check if elements exist
+    if (!recordsTbody) {
+      console.error("ERROR: Could not find records table body!");
+    }
+    
+    if (!searchInput) {
+      console.error("ERROR: Could not find search input!");
+    }
+  }
+
+  // Start the application
+  initialize();
 });

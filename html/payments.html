@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment History</title>
     <link rel="stylesheet" href="../css/payments.css">
+    <link rel="stylesheet" href="../css/loading.css">
     <link rel="icon" href="../assets/logo-dark.png">
 </head>
 <body>
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-content">
+    <div class="loading-logo">
+      <img src="../assets/logo-light.png" alt="Rean Ramz Lending Corp" class="loading-logo-img">
+    </div>
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading...</div>
+  </div>
+</div>
 <header>
   <nav class="nav-bar">
     <ul class="navi">
@@ -118,5 +128,6 @@
     </div>
 
     <script src="../js/payments.js"></script>
+    <script src="../js/loading.js"></script>
 </body>
 </html>

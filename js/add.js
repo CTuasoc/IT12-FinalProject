@@ -24,17 +24,16 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector('input[name="address"]').value = window.customerData.address;
     }
   }
+  
+ 
 
-  // Calculate loan details
   function calculateLoan() {
     const loanAmount = parseFloat(loanAmountInput.value) || 0;
-    const interestRate = 0.05; // 5%
+    const interestRate = 0.05;
 
-    // Total with interest
     const totalAmount = loanAmount + (loanAmount * interestRate);
     totalAmountInput.value = totalAmount > 0 ? totalAmount.toFixed(2) : "";
 
-    // Per Day (based on due date)
     const dueDate = new Date(dueDateInput.value);
     const today = new Date();
 
@@ -50,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loanAmountInput.addEventListener("input", calculateLoan);
   dueDateInput.addEventListener("change", calculateLoan);
 
-  // Handle form submit with AJAX
   if (addForm) {
     addForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -67,12 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
             addFormMsg.style.color = "lightgreen";
             addFormMsg.textContent = "Account Added Successfully!";
 
-            // Reset form
             addForm.reset();
             totalAmountInput.value = "";
             perDayInput.value = "";
 
-            // Refresh records if available
             if (typeof loadRecords === "function") {
               loadRecords();
             }
