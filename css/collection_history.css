@@ -1,8 +1,54 @@
+/* ========= CSS VARIABLES FOR LIGHT/DARK MODE ========= */
+:root {
+  --bg-color: #f2f3f4;
+  --text-color: #000c1a;
+  --card-bg: #d6f1ff;
+  --card-hover-bg: #b0e1ff;
+  --header-bg: #ffffff;
+  --link-color: #0e61ba;
+  --link-hover: #003e81;
+  --border-color: #02020B;
+  --notify-bg: #e6f2ff;
+  --modal-bg: #fefefe;
+  --modal-border: #888;
+  --action-btn-bg: #0e61ba;
+  --action-btn-hover: #003e81;
+  --delete-btn-bg: #dc3545;
+  --delete-btn-hover: #c82333;
+  --table-bg: #0D1546;
+  --table-border: #2D4882;
+  --table-text: #CEE0F4;
+  --table-hover: #779ABF;
+}
+
+/* --- DARK MODE --- */
+.dark-mode {
+  --bg-color: #001631;
+  --text-color: #ffffff;
+  --card-bg: #000c1a;
+  --card-hover-bg: #002552;
+  --header-bg: #001631;
+  --link-color: #0e61ba;
+  --link-hover: #003e81;
+  --border-color: #e6f2ff;
+  --notify-bg: #002552;
+  --modal-bg: #0c1a33;
+  --modal-border: #ffffff;
+  --action-btn-bg: #0e61ba;
+  --action-btn-hover: #003e81;
+  --delete-btn-bg: #dc3545;
+  --delete-btn-hover: #c82333;
+  --table-bg: #0D1546;
+  --table-border: #2D4882;
+  --table-text: #CEE0F4;
+  --table-hover: #779ABF;
+}
+
 /* ========= GLOBAL STYLES ========= */
 body {
   font-family: Arial, sans-serif;
-  background: #2D4882;
-  color: #CEE0F4;
+  background: var(--bg-color);
+  color: var(--text-color);
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -10,22 +56,48 @@ body {
 
 /* ========= HEADER ========= */
 .nav-bar {
-  padding: 10px 30px;
-}
-
-.navi {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  flex-wrap: wrap;
+  padding: 0 20px;
+  background: var(--bg-color);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .logo {
   height: 100px;
   width: auto;
+}
+
+.home-btn {
+  background-color: var(--link-color);
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.home-btn:hover {
+  background-color: var(--link-hover);
+  border: 1px solid var(--link-color);
 }
 
 .home {
@@ -39,9 +111,40 @@ body {
   transform: scale(0.95);
 }
 
+.theme-toggle {
+  background-color: var(--link-color);
+  width: 35px;
+  height: 35px;
+  padding: 6px;
+  cursor: pointer;
+  background-size: 25px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 6px;
+  transition: 
+    background-image 0.3s ease,
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+/* Light Mode */
+body:not(.dark-mode) .theme-toggle {
+  background-image: url("../assets/dark_mode.png");
+}
+
+/* Dark Mode */
+body.dark-mode .theme-toggle {
+  background-image: url("../assets/light_mode.png");
+}
+
+.theme-toggle:hover {
+  background-color: var(--link-hover);
+  transform: scale(1.05);
+}
+
 /* ========= MAIN CONTENT (SERNO CONTAINER) ========= */
 .serno {
-  background-color: #0D1546;
+  background-color: var(--card-bg);
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -56,7 +159,7 @@ body {
   width: 100%;
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 2px solid #2D4882;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .header-top {
@@ -79,7 +182,7 @@ body {
 .page-header h2 {
   font-size: 28px;
   margin: 0;
-  color: #CEE0F4;
+  color: var(--text-color);
   font-weight: bold;
   white-space: nowrap;
 }
@@ -87,15 +190,37 @@ body {
 .page-description {
   font-size: 16px;
   margin: 0;
-  color: #779ABF;
+  color: var(--link-color);
+}
+
+.date-filter {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.date-filter label {
+  font-weight: 600;
+}
+
+.date-filter input[type="date"] {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--header-bg);
+  color: var(--text-color);
+  font-size: 0.9rem;
 }
 
 .minimalist-search {
   padding: 10px 16px;
-  border: 2px solid #779ABF;
+  border: 2px solid var(--link-color);
   border-radius: 8px;
-  background-color: #1a2a5a;
-  color: #CEE0F4;
+  background-color: var(--header-bg);
+  color: var(--text-color);
   font-size: 14px;
   transition: all 0.3s ease;
   flex: 0 1 300px;
@@ -104,13 +229,13 @@ body {
 
 .minimalist-search:focus {
   outline: none;
-  border-color: #CEE0F4;
-  background-color: #0D1546;
-  box-shadow: 0 0 8px rgba(119, 154, 191, 0.4);
+  border-color: var(--link-color);
+  background-color: var(--card-bg);
+  box-shadow: 0 0 8px rgba(14, 97, 186, 0.4);
 }
 
 .minimalist-search::placeholder {
-  color: #779ABF;
+  color: var(--link-color);
 }
 
 /* ========= REFRESH BUTTON WRAPPER ========= */
@@ -122,10 +247,10 @@ body {
 
 .refresh-btn-minimalist {
   padding: 8px 16px;
-  border: 1px solid #779ABF;
+  border: 1px solid var(--link-color);
   border-radius: 6px;
   background-color: transparent;
-  color: #CEE0F4;
+  color: var(--text-color);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -136,10 +261,10 @@ body {
 }
 
 .refresh-btn-minimalist:hover {
-  background-color: #779ABF;
-  color: #02020B;
-  border-color: #CEE0F4;
-  box-shadow: 0 2px 6px rgba(119, 154, 191, 0.3);
+  background-color: var(--link-color);
+  color: white;
+  border-color: var(--link-color);
+  box-shadow: 0 2px 6px rgba(14, 97, 186, 0.3);
 }
 
 .refresh-btn-minimalist:active {
@@ -155,9 +280,9 @@ body {
 }
 
 .refresh-btn {
-  background-color: #2D4882;
+  background-color: var(--link-color);
   border: none;
-  color: #CEE0F4;
+  color: white;
   font-size: 14px;
   padding: 8px 16px;
   border-radius: 6px;
@@ -167,8 +292,8 @@ body {
 }
 
 .refresh-btn:hover {
-  background-color: #779ABF;
-  color: #02020B;
+  background-color: var(--link-hover);
+  color: white;
 }
 
 /* ========= COLLECTION CONTAINER ========= */
@@ -177,17 +302,18 @@ body {
   max-height: 600px;
   overflow-y: auto;
   border-radius: 10px;
-  border: 1px solid #779ABF;
+  border: 1px solid var(--link-color);
   padding: 10px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .loading-message {
   text-align: center;
   padding: 40px;
   font-size: 18px;
-  color: #CEE0F4;
-  background: #2D4882;
+  color: var(--text-color);
+  background: var(--card-bg);
   border-radius: 10px;
   margin: 20px 0;
 }
@@ -196,8 +322,185 @@ body {
   text-align: center;
   padding: 20px;
   font-size: 16px;
-  color: #779ABF;
+  color: var(--link-color);
   margin: 20px 0;
+}
+
+/* ========= COLLECTION TABLE (PAYMENTS-STYLE) ========= */
+.collection-table-wrapper {
+  flex: 1;
+  border-radius: 8px;
+  border: 1px solid var(--table-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.collection-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 0;
+  background: var(--table-bg);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 1000px;
+}
+
+.collection-table thead {
+  display: block;
+  width: calc(100% - 8px);
+  background: var(--table-bg);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.collection-table thead tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.collection-table tbody {
+  display: block;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  width: 100%;
+  min-height: 0;
+}
+
+.collection-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  background-color: var(--table-bg);
+  transition: background-color 0.2s ease;
+}
+
+.collection-table tbody tr:nth-child(even) {
+  background-color: rgba(119, 154, 191, 0.1);
+}
+
+.collection-table tbody tr:hover {
+  background-color: var(--table-hover);
+}
+
+.collection-table th,
+.collection-table td {
+  padding: 12px 15px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+/* Column-specific widths for consistent alignment */
+.collection-table th:nth-child(1),
+.collection-table td:nth-child(1) {
+  width: 20%;
+  text-align: left;
+  white-space: normal;
+  word-break: break-word;
+  overflow: visible;
+}
+
+.collection-table th:nth-child(2),
+.collection-table td:nth-child(2) {
+  width: 12%;
+}
+
+.collection-table th:nth-child(3),
+.collection-table td:nth-child(3) {
+  width: 13%;
+}
+
+.collection-table th:nth-child(4),
+.collection-table td:nth-child(4) {
+  width: 13%;
+}
+
+.collection-table th:nth-child(5),
+.collection-table td:nth-child(5) {
+  width: 18%;
+}
+
+.collection-table th:nth-child(6),
+.collection-table td:nth-child(6) {
+  width: 14%;
+}
+
+.collection-table th:nth-child(7),
+.collection-table td:nth-child(7) {
+  width: 10%;
+}
+
+.collection-table th {
+  font-weight: bold;
+  color: var(--table-text);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--table-hover);
+  background-color: var(--table-bg);
+}
+
+.collection-table td {
+  color: var(--table-text);
+  font-size: 14px;
+  border-bottom: 1px solid var(--table-border);
+  vertical-align: middle;
+}
+
+.collection-table tbody tr:hover td {
+  color: white;
+}
+
+/* Per-day collection status inside Action column */
+.day-status {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.day-status-text {
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.paid-today-badge {
+  background-color: #2e7d32;
+  color: #ffffff;
+}
+
+.not-paid-badge {
+  background-color: #ff9800;
+  color: #ffffff;
+}
+
+.collection-table tbody::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.collection-table tbody::-webkit-scrollbar-track {
+  background: rgba(45, 72, 130, 0.1);
+}
+
+.collection-table tbody::-webkit-scrollbar-thumb {
+  background: rgba(119, 154, 191, 0.5);
+  border-radius: 4px;
+}
+
+.collection-table tbody::-webkit-scrollbar-thumb:hover {
+  background: rgba(206, 224, 244, 0.7);
+}
+
+.collection-table tbody {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(119, 154, 191, 0.5) rgba(45, 72, 130, 0.1);
 }
 
 /* ========= COLLECTION GRID ========= */
