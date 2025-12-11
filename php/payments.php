@@ -26,4 +26,3 @@ $html = str_replace('{{HOME_PAGE}}', $homePage, $html);
 
 echo $html;
 ?>
-

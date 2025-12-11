@@ -13,8 +13,6 @@
     --modal-border: #888;
     --action-btn-bg: #0e61ba;
     --action-btn-hover: #003e81;
-    --delete-btn-bg: #dc3545;
-    --delete-btn-hover: #c82333;
 }
 
 /* --- DARK MODE --- */
@@ -33,8 +31,6 @@
     --modal-border: #ffffff;
     --action-btn-bg: #0e61ba;
     --action-btn-hover: #003e81;
-    --delete-btn-bg: #dc3545;
-    --delete-btn-hover: #c82333;
 }
 
 /* ========= GLOBAL STYLES ========= */

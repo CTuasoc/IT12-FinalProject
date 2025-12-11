@@ -115,14 +115,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (sortNameAsc) sortNameAsc.checked = true;
 
         if (searchInput) searchInput.value = "";
-        if (paymentDateInput) paymentDateInput.value = "";
+        if (paymentDateInput) {
+            // Don't clear the date filter - keep current date
+            // paymentDateInput.value = "";
+        }
 
         currentFilters = {
             search: "",
             status: "all",
             nameType: "both",
             sort: "name_asc",
-            paymentDate: "",
+            paymentDate: paymentDateInput ? paymentDateInput.value : "",
         };
     }
 
@@ -177,6 +180,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!Array.isArray(data) || data.length === 0) {
                 noCollectionsMessage.style.display = "block";
+                noCollectionsMessage.textContent = currentFilters.paymentDate 
+                    ? `No collections found for ${formatDate(currentFilters.paymentDate)}.`
+                    : "No collection records found.";
                 return;
             }
 
@@ -190,13 +196,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Display customers in the grid (now as table rows)
+    // Display customers in the table
     function displayCustomers(customers) {
-        // Clear existing grid
+        // Clear existing table
         collectionTableBody.innerHTML = "";
 
         if (!customers || customers.length === 0) {
             noCollectionsMessage.style.display = "block";
+            noCollectionsMessage.textContent = currentFilters.paymentDate 
+                ? `No collections found for ${formatDate(currentFilters.paymentDate)}.`
+                : "No collection records found.";
             collectionTableContainer.style.display = "none";
             return;
         }
@@ -206,7 +215,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedDate = currentFilters.paymentDate || "";
         const selectedDateText = selectedDate ? formatDate(selectedDate) : "";
 
-        customers.forEach((cust) => {
+        // Filter customers who have payments on the selected date
+        const customersWithPayments = customers.filter(cust => {
+            if (!selectedDate) return true; // Show all if no date selected
+            
+            // Check if customer has a payment on the selected date
+            // This assumes your backend returns a PaidOnDate field for customers who paid on that day
+            return cust.PaidOnDate === true || cust.PaymentDate === selectedDate;
+        });
+
+        if (customersWithPayments.length === 0 && selectedDate) {
+            noCollectionsMessage.style.display = "block";
+            noCollectionsMessage.textContent = `No payments found for ${selectedDateText}.`;
+            collectionTableContainer.style.display = "none";
+            return;
+        }
+
+        customersWithPayments.forEach((cust) => {
             const row = document.createElement("tr");
             row.className = "record-row";
 
@@ -261,31 +286,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${cust.IsPaid ? '<span class="status-badge paid-badge">PAID</span>' : ""}
             `;
 
-            let actionText = "COLLECT";
-            if (cust.IsPaid) {
-                actionText = "PASS";
-            } else if (cust.IsOverdue) {
-                actionText = "FOLLOW UP";
+            // Amount paid on the selected date (NEW: Changed from Daily Payment to Amount Paid Today)
+            let amountPaidToday = "---";
+            if (selectedDate && cust.PaidOnDate) {
+                amountPaidToday = cust.AmountPaidOnDate ? formatCurrency(cust.AmountPaidOnDate) : formatCurrency(perDay);
+            } else if (selectedDate) {
+                amountPaidToday = "₱0.00";
             }
 
-            // Per-day collection status for the selected date
-            let dayStatusHtml = "";
+            // Payment status for the selected date (NEW: Changed from Action to Payment Status)
+            let paymentStatus = "---";
+            let paymentStatusClass = "";
+            
             if (selectedDate) {
                 if (cust.PaidOnDate) {
-                    const amountOnDate = cust.AmountPaidOnDate ? formatCurrency(cust.AmountPaidOnDate) : "";
-                    dayStatusHtml = `
-                        <div class="day-status paid-today">
-                            <span class="status-badge paid-today-badge">PAID</span>
-                            <span class="day-status-text">${selectedDateText}${amountOnDate ? " • " + amountOnDate : ""}</span>
-                        </div>
-                    `;
+                    paymentStatus = "PAID";
+                    paymentStatusClass = "paid-status";
                 } else {
-                    dayStatusHtml = `
-                        <div class="day-status not-paid">
-                            <span class="status-badge not-paid-badge">NOT PAID</span>
-                            <span class="day-status-text">${selectedDateText}</span>
-                        </div>
-                    `;
+                    paymentStatus = "NOT PAID";
+                    paymentStatusClass = "not-paid-status";
                 }
             }
 
@@ -295,8 +314,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${formatCurrency(loanAmount)}</td>
                 <td>${formatCurrency(interestAmount)}</td>
                 <td>${termsText}</td>
-                <td>${formatCurrency(perDay)} ${statusBadges}</td>
-                <td>${actionText}${dayStatusHtml ? `<br>${dayStatusHtml}` : ""}</td>
+                <td>${amountPaidToday} ${statusBadges}</td>
+                <td><span class="payment-status ${paymentStatusClass}">${paymentStatus}</span></td>
             `;
 
             collectionTableBody.appendChild(row);
@@ -311,4 +330,3 @@ document.addEventListener("DOMContentLoaded", () => {
     // Load collection summary on page load
     loadCollectionSummary();
 });
-

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment History</title>
+    <title>Payment Management| Rean Ramz Lending Corp</title>
     <link rel="stylesheet" href="../css/payments.css">
     <link rel="stylesheet" href="../css/loading.css">
     <link rel="icon" href="../assets/logo-dark.png">
@@ -20,19 +20,18 @@
 </div>
 <header>
   <nav class="nav-bar">
-    <ul class="navi">
-      <li>
-        <a href="../php/{{HOME_PAGE}}">
-          <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
-        </a>
-      </li>
-      <li>
-        <a href="../php/{{HOME_PAGE}}">
-          <img class="home" src="../assets/home.svg" alt="Home">
-        </a>
-      </li>
-    </ul>
-  </nav>
+            <div class="nav-left">
+                <a href="../php/collector.php">
+                    <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
+                </a>
+            </div>
+            <div class="nav-right">
+                <div id="themeToggle" class="theme-toggle"></div>
+                <a href="../php/collector.php" class="home-btn">
+                    <span>HOME</span>
+                </a>
+            </div>
+        </nav>
 </header>
 
     <!-- Main Content Container -->
@@ -40,46 +39,124 @@
         <div class="page-header">
             <div class="header-content">
                 <div>
-                    <h2>PAYMENT MANAGEMENT</h2>
-                    
+                    <h2>DAILY PAYMENT MANAGEMENT</h2>
+                    <p id="todayDate">Today: Loading...</p>
                 </div>
-            </div>
-        </div>
-
-        <!-- Payment History Container -->
-        <div class="payment-container">
-            <div class="section-header">
-                <h3>Payment History</h3>
-                <button id="refreshBtn" class="refresh-btn" title="Refresh payment history">
+                <button id="refreshBtn" class="refresh-btn">
                     <span>🔄 Refresh</span>
                 </button>
             </div>
-            <div id="loadingMessage" class="loading-message">Loading payment history...</div>
-            <div id="noPaymentsMessage" class="no-payments-message" style="display: none;">
-                No payment records found.
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search customers by name..." autocomplete="off">
             </div>
-            <div id="paymentTableContainer" class="payment-table-wrapper" style="display: none;">
-                <table id="paymentTable" class="payment-table">
+        </div>
+
+        <!-- Customers Table Container -->
+        <div class="customers-container">
+            <div id="loadingMessage" class="loading-message">Loading customers...</div>
+            <div id="noCustomersMessage" class="no-customers-message" style="display: none;">
+                No customers found.
+            </div>
+            <div id="customersTableContainer" class="customers-table-wrapper" style="display: none;">
+                <table id="customersTable" class="customers-table">
                     <thead>
                         <tr>
                             <th>Customer Name</th>
-                            <th>Date of Loan</th>
-                            <th>Principal</th>
-                            <th>Interest</th>
-                            <th>Terms</th>
-                            <th>Daily Payment</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="paymentTableBody">
-                        <!-- Payment records will be inserted here -->
+                    <tbody id="customersTableBody">
+                        <!-- Customer rows will be inserted here -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Record Daily Payment</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <div class="display-field" id="modalCustomerName"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Payment Date</label>
+                        <div class="display-field" id="modalPaymentDate"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Total Loan Amount</label>
+                        <div class="display-field" id="modalLoanAmount">₱0.00</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Amount Paid</label>
+                        <div class="display-field" id="modalAmountPaid">₱0.00</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Remaining Balance</label>
+                        <div class="display-field" id="modalRemainingBalance">₱0.00</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Daily Payment Amount</label>
+                        <div class="display-field" id="modalDailyPayment">₱0.00</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Loan Terms</label>
+                        <div class="display-field" id="modalTerms">0 days</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="customAmountCheckbox">
+                            <label for="customAmountCheckbox">Pay different amount today</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="customAmountGroup" style="display: none;">
+                        <label>Enter Amount to Pay Today</label>
+                        <input type="number" id="customAmount" min="1" step="0.01" placeholder="Enter amount">
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="info-box" id="paymentInfo">
+                            Click Proceed to record the daily payment.
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="alreadyPaidMessage" style="display: none;">
+                        <div class="already-paid-box">
+                            This customer has already paid today.
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions" id="paymentActions">
+                        <button type="button" class="btn-cancel" id="cancelPayment">Cancel</button>
+                        <button type="submit" class="btn-proceed" id="proceedPayment">Proceed with Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/payments.js"></script>
+    <script src="../js/dark_light_mode.js"></script>
     <script src="../js/loading.js"></script>
 </body>
 </html>

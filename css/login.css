@@ -9,11 +9,10 @@ body {
     align-items: center;
     background-attachment: fixed;
     background-size: cover;
-  }
-  
- 
-  .login-box {
-    background: rgba(1, 18, 250, 0.31); 
+}
+
+.login-box {
+    background: rgba(1, 18, 250, 0.31);
     padding: 40px;
     border-radius: 15px;
     width: 320px;
@@ -23,27 +22,31 @@ body {
     justify-content: center;
     text-align: center;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
-  
-  .login-box img{
-    padding-left: 75px;
-  }
+}
 
-  .login-box h2 {
+/* LOGO FIX - Desktop */
+.login-box .logo {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 25px auto; /* This centers it */
+    display: block;
+}
+
+.login-box h2 {
     margin-bottom: 25px;
     font-size: 26px;
     font-weight: bold;
-  }
-  
-  .login-box label {
+}
+
+.login-box label {
     display: block;
     text-align: left;
     margin: 10px 0 5px;
     font-size: 14px;
     color: #f1f1f1;
-  }
-  
-  .login-box input {
+}
+
+.login-box input {
     width: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -55,14 +58,14 @@ body {
     outline: none;
     display: flex;
     align-items: center;
-    color: #ffffff
-  }
-  
-  .login-box input:focus {
+    color: #ffffff;
+}
+
+.login-box input:focus {
     border-bottom: 2px solid #74c0fc;
-  }
-  
-  .login-box button {
+}
+
+.login-box button {
     width: 100%;
     padding: 15px;
     border: none;
@@ -73,13 +76,13 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: 0.3s;
-  }
-  
-  .login-box button:hover {
-    background: #74c0fc;
-  }
+}
 
-  .password-wrapper {
+.login-box button:hover {
+    background: #74c0fc;
+}
+
+.password-wrapper {
     position: relative;
 }
 
@@ -90,4 +93,43 @@ body {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+/* MOBILE - Center the logo properly */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+    
+    .login-box {
+        width: 100%;
+        max-width: 320px;
+        padding: 30px;
+    }
+    
+    /* This will center and resize the logo */
+    .login-box .logo {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 20px auto;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .login-box {
+        padding: 25px;
+    }
+    
+    .login-box .logo {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 15px auto;
+    }
+}
+
+/* iOS fix */
+@media screen and (max-width: 768px) {
+    input {
+        font-size: 16px !important;
+    }
 }
