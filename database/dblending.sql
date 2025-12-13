@@ -1,22 +1,18 @@
 /*
-SQLyog Community v13.3.0 (64 bit)
+SQLyog Community v13.3.1 (64 bit)
 MySQL - 10.4.32-MariaDB : Database - dblending
 *********************************************************************
 */
 
- /*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8 */;
 
- /*!40101 SET SQL_MODE=''*/;
+/*!40101 SET SQL_MODE=''*/;
 
- /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-
- /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-
- /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
- /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `dblending` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`dblending` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
 USE `dblending`;
 
@@ -30,7 +26,7 @@ CREATE TABLE `tblcustomeracc` (
   `LastName` varchar(50) NOT NULL,
   `BusinessName` varchar(100) DEFAULT NULL,
   `Address` varchar(150) DEFAULT NULL,
-  `PhoneNum` varchar(20) DEFAULT NULL,
+  `PhoneNum` varchar(11) NOT NULL,
   `LoanDate` date DEFAULT NULL,
   `LoanAmount` decimal(12,2) NOT NULL DEFAULT 0.00,
   `AmountPaid` decimal(12,2) NOT NULL DEFAULT 0.00,
@@ -38,22 +34,17 @@ CREATE TABLE `tblcustomeracc` (
   `TotalAmount` decimal(12,2) NOT NULL DEFAULT 0.00,
   `PerDay` decimal(10,2) NOT NULL DEFAULT 0.00,
   `PerDayBase` decimal(10,2) DEFAULT NULL,
-  `IsPaymentDoubled` TINYINT(1) NOT NULL DEFAULT 0,
-  `DoubledPaymentAmount` DECIMAL(12,2) NOT NULL DEFAULT 0.00,
-  `Terms` INT NOT NULL DEFAULT 0,
-  `Status` ENUM('active','closed','defaulted') NOT NULL DEFAULT 'active',
-  `CreatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `UpdatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `IsPaymentDoubled` tinyint(1) NOT NULL DEFAULT 0,
+  `DoubledPaymentAmount` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `Terms` int(11) NOT NULL DEFAULT 0,
+  `Status` enum('active','closed','defaulted') NOT NULL DEFAULT 'active',
+  `CreatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `UpdatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`CustomerID`),
   KEY `idx_status` (`Status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `tblcustomeracc` */
-
-INSERT INTO `tblcustomeracc`
-(`CustomerID`,`FirstName`,`LastName`,`BusinessName`,`Address`,`PhoneNum`,`LoanDate`,`LoanAmount`,`AmountPaid`,`DueDate`,`TotalAmount`,`PerDay`,`PerDayBase`)
-VALUES 
-(1,'Mari','Jose','ChristmasStore','MaynilaTunga','09875643121','2025-12-11',99999999.99,0.00,'2120-12-25',99999999.99,24154.62,NULL);
 
 /*Table structure for table `tbldepartment` */
 
@@ -67,7 +58,7 @@ CREATE TABLE `tbldepartment` (
 
 /*Data for the table `tbldepartment` */
 
-INSERT INTO `tbldepartment`(`DeptID`,`DeptName`) VALUES 
+insert  into `tbldepartment`(`DeptID`,`DeptName`) values 
 (1,'Admin'),
 (2,'Secretary'),
 (3,'Collector');
@@ -91,26 +82,10 @@ CREATE TABLE `tblemployees` (
 
 /*Data for the table `tblemployees` */
 
-INSERT INTO `tblemployees`
-(`EmpID`,`FirstName`,`LastName`,`Email`,`PASSWORD`,`DeptID`) VALUES 
-(1,'johnny','Doejali','admin@gmail.com','admin123',1),
-(6,'Miss','Ssim','TestCollector@gmail.com','test123',3),
-(7,'Jane','Doejali','janedai@gmail.com','jane123',1);
-
-/*Table structure for table `tblloginhistory` */
-
-DROP TABLE IF EXISTS `tblloginhistory`;
-
-CREATE TABLE `tblloginhistory` (
-  `LogID` int(11) NOT NULL AUTO_INCREMENT,
-  `EmpID` int(11) DEFAULT NULL,
-  `LogDate` date DEFAULT NULL,
-  `TimeIn` time DEFAULT NULL,
-  `TimeOut` time DEFAULT NULL,
-  PRIMARY KEY (`LogID`),
-  KEY `EmpID` (`EmpID`),
-  CONSTRAINT `tblloginhistory_ibfk_1` FOREIGN KEY (`EmpID`) REFERENCES `tblemployees` (`EmpID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+insert  into `tblemployees`(`EmpID`,`FirstName`,`LastName`,`Email`,`PASSWORD`,`DeptID`) values 
+(1,'Admin','Account','admin@gmail.com','admin123',1),
+(6,'Collector','Account','collector@gmail.com','$2y$10$lMbOy6J4mtP.MfLNba.t4OBzDBBYg2pHDLFeKhFEJ67zneA9.HxKe',3),
+(7,'Secretary','Account','secretary@gmail.com','secretary123',2);
 
 /*Table structure for table `tblpaymenthistory` */
 
@@ -122,7 +97,7 @@ CREATE TABLE `tblpaymenthistory` (
   `EmpID` int(11) DEFAULT NULL,
   `Amount` decimal(12,2) NOT NULL DEFAULT 0.00,
   `PaymentDate` date NOT NULL,
-  `CreatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CreatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`PaymentID`),
   KEY `CustomerID` (`CustomerID`),
   KEY `EmpID` (`EmpID`),
@@ -130,38 +105,66 @@ CREATE TABLE `tblpaymenthistory` (
   CONSTRAINT `tblpaymenthistory_ibfk_2` FOREIGN KEY (`EmpID`) REFERENCES `tblemployees` (`EmpID`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `tblrequirements`;
+/*Data for the table `tblpaymenthistory` */
 
-CREATE TABLE `tblrequirements` (
-  `ApplicationID` int(100) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(50) NOT NULL,
-  `LastName` varchar(50) NOT NULL,
-  `BusinessName` varchar(100) NOT NULL,
-  `PhoneNumber` varchar(20) NOT NULL,
-  `CustomerAddress` varchar(150) NOT NULL,
-  `Status` varchar(20) NOT NULL DEFAULT 'Pending',
-  PRIMARY KEY (`ApplicationID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/* Trigger structure for table `tblcustomeracc` */
 
-DROP TABLE IF EXISTS `tblnotifications`;
+DELIMITER $$
 
-CREATE TABLE `tblnotifications` (
-  `notif_id` INT NOT NULL AUTO_INCREMENT,
-  `notif_msg` TEXT NOT NULL,
-  `type` VARCHAR(50) NOT NULL DEFAULT 'info',
-  `is_read` TINYINT(1) NOT NULL DEFAULT 0,
-  `meta` JSON DEFAULT NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`notif_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `validate_phone_before_insert` */$$
+
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `validate_phone_before_insert` BEFORE INSERT ON `tblcustomeracc` FOR EACH ROW 
+BEGIN
+    -- Clean the phone number (remove non-digits)
+    SET NEW.PhoneNum = REGEXP_REPLACE(NEW.PhoneNum, '[^0-9]', '');
+    
+    -- Validate length
+    IF LENGTH(NEW.PhoneNum) != 11 THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Phone number must be exactly 11 digits';
+    END IF;
+    
+    -- Optional: Validate format (starts with 09 for Philippines)
+    IF NOT NEW.PhoneNum REGEXP '^09[0-9]{9}$' THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Phone number must start with 09 and contain only digits (e.g., 09123456789)';
+    END IF;
+END */$$
 
 
- /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+DELIMITER ;
 
- /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/* Trigger structure for table `tblcustomeracc` */
 
- /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+DELIMITER $$
 
- /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!50003 DROP TRIGGER*//*!50032 IF EXISTS */ /*!50003 `validate_phone_before_update` */$$
 
--- Dump completed on 2024-06-10 12:00:00
+/*!50003 CREATE */ /*!50017 DEFINER = 'root'@'localhost' */ /*!50003 TRIGGER `validate_phone_before_update` BEFORE UPDATE ON `tblcustomeracc` FOR EACH ROW 
+BEGIN
+    -- Only validate if PhoneNum is being changed
+    IF NEW.PhoneNum IS NOT NULL AND NEW.PhoneNum <> OLD.PhoneNum THEN
+        -- Clean the phone number
+        SET NEW.PhoneNum = REGEXP_REPLACE(NEW.PhoneNum, '[^0-9]', '');
+        
+        -- Validate length
+        IF LENGTH(NEW.PhoneNum) != 11 THEN
+            SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Phone number must be exactly 11 digits';
+        END IF;
+        
+        -- Optional: Validate format
+        IF NOT NEW.PhoneNum REGEXP '^09[0-9]{9}$' THEN
+            SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Phone number must start with 09 and contain only digits';
+        END IF;
+    END IF;
+END */$$
+
+
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
