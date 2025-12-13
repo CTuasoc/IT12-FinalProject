@@ -92,21 +92,7 @@
                         <div class="display-field" id="modalCustomerName"></div>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Payment Date</label>
-                        <div class="display-field" id="modalPaymentDate"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Total Loan Amount</label>
-                        <div class="display-field" id="modalLoanAmount">₱0.00</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Amount Paid</label>
-                        <div class="display-field" id="modalAmountPaid">₱0.00</div>
-                    </div>
-                    
+                    <!-- Removed Payment Date, Total Loan Amount, and Amount Paid fields per request -->
                     <div class="form-group">
                         <label>Remaining Balance</label>
                         <div class="display-field" id="modalRemainingBalance">₱0.00</div>
@@ -134,12 +120,6 @@
                         <input type="number" id="customAmount" min="1" step="0.01" placeholder="Enter amount">
                     </div>
                     
-                    <div class="form-group">
-                        <div class="info-box" id="paymentInfo">
-                            Click Proceed to record the daily payment.
-                        </div>
-                    </div>
-                    
                     <div class="form-group" id="alreadyPaidMessage" style="display: none;">
                         <div class="already-paid-box">
                             This customer has already paid today.
@@ -147,8 +127,8 @@
                     </div>
                     
                     <div class="form-actions" id="paymentActions">
-                        <button type="button" class="btn-cancel" id="cancelPayment">Cancel</button>
                         <button type="submit" class="btn-proceed" id="proceedPayment">Proceed with Payment</button>
+                        <button type="button" class="btn-cancel" id="cancelPayment">Cancel</button>
                     </div>
                 </form>
             </div>

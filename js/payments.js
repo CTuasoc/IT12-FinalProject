@@ -14,13 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const customAmountGroup = document.getElementById("customAmountGroup");
     const customAmountInput = document.getElementById("customAmount");
     const modalCustomerName = document.getElementById("modalCustomerName");
-    const modalPaymentDate = document.getElementById("modalPaymentDate");
-    const modalLoanAmount = document.getElementById("modalLoanAmount");
-    const modalAmountPaid = document.getElementById("modalAmountPaid");
+    
     const modalRemainingBalance = document.getElementById("modalRemainingBalance");
     const modalDailyPayment = document.getElementById("modalDailyPayment");
     const modalTerms = document.getElementById("modalTerms");
-    const paymentInfo = document.getElementById("paymentInfo");
     const alreadyPaidMessage = document.getElementById("alreadyPaidMessage");
     const proceedPayment = document.getElementById("proceedPayment");
 
@@ -94,18 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
         updatePaymentInfo();
     }
 
-    // Update payment info text
+    // Update payment info text - removed display of amount to be paid
     function updatePaymentInfo() {
-        if (!currentCustomer) return;
-        
-        const dailyPayment = parseFloat(currentCustomer.DailyPayment);
-        let amountToPay = dailyPayment;
-        
-        if (customAmountCheckbox.checked && customAmountInput.value && !isNaN(parseFloat(customAmountInput.value))) {
-            amountToPay = parseFloat(customAmountInput.value);
-        }
-        
-        paymentInfo.textContent = `Amount to be paid today: ₱${amountToPay.toFixed(2)}`;
+        // Function kept for compatibility but no longer displays amount
     }
 
     // Show payment modal
@@ -120,9 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Populate modal fields
         modalCustomerName.textContent = customer.CustomerName;
-        modalPaymentDate.textContent = todayFormatted;
-        modalLoanAmount.textContent = `₱${parseFloat(customer.TotalAmount).toFixed(2)}`;
-        modalAmountPaid.textContent = `₱${parseFloat(customer.AmountPaid).toFixed(2)}`;
+        // Removed display of payment date, total loan amount, and amount paid per request
         modalRemainingBalance.textContent = `₱${parseFloat(customer.RemainingBalance).toFixed(2)}`;
         modalDailyPayment.textContent = `₱${parseFloat(customer.DailyPayment).toFixed(2)}`;
         
@@ -148,12 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 proceedPayment.textContent = 'Already Paid Today';
                 alreadyPaidMessage.innerHTML = '<div class="already-paid-box">This customer has already paid today.</div>';
             }
-            paymentInfo.style.display = 'none';
         } else {
             alreadyPaidMessage.style.display = 'none';
             proceedPayment.disabled = false;
             proceedPayment.textContent = 'Proceed with Payment';
-            paymentInfo.style.display = 'block';
         }
         
         // Show modal
