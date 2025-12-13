@@ -313,7 +313,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${loanDateText}</td>
                 <td>${formatCurrency(loanAmount)}</td>
                 <td>${formatCurrency(interestAmount)}</td>
-                <td>${termsText}</td>
                 <td>${amountPaidToday} ${statusBadges}</td>
                 <td><span class="payment-status ${paymentStatusClass}">${paymentStatus}</span></td>
             `;
