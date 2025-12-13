@@ -1,4 +1,4 @@
-// check_rec.js - Complete working version with amount display fix
+// check_rec.js - Admin-only delete button (completely removed from DOM for non-admins) with terms display
 document.addEventListener("DOMContentLoaded", () => {
   const recordsTbody = document.getElementById("records");
   const searchInput = document.getElementById("search");
@@ -8,7 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalClose = document.querySelector(".modal-close");
   let currentCustomerID = null;
   let currentCustomerName = "";
-
+  
+  // Check if current user is admin (from PHP variable)
+  const isAdminUser = typeof isAdmin !== 'undefined' ? isAdmin : false;
+  
   // Filter variables
   let currentFilters = {
     search: '',
@@ -16,6 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
     nameType: 'both',
     sort: 'name_asc'
   };
+
+  // Remove delete button completely if user is not admin
+  if (!isAdminUser && deleteBtn) {
+    console.log("Removing delete button from DOM (user is not admin)");
+    deleteBtn.parentNode.removeChild(deleteBtn);
+  }
 
   // Helper: display message with styling
   function showMessage(message, type = "info") {
@@ -229,9 +238,8 @@ document.addEventListener("DOMContentLoaded", () => {
         recordsTbody.appendChild(row);
       });
 
-      // Debug logging
       console.log("Records loaded:", data.length);
-      console.log("Buttons found:", document.querySelectorAll(".table-action-btn").length);
+      console.log("User is admin:", isAdminUser);
       
       attachDisplayEvents();
     } catch (err) {
@@ -243,7 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Attach display button events to table rows
   function attachDisplayEvents() {
     const buttons = document.querySelectorAll(".table-action-btn");
-    console.log("Attaching events to", buttons.length, "buttons");
     
     buttons.forEach(btn => {
       // Remove any existing listeners to prevent duplicates
@@ -253,31 +260,14 @@ document.addEventListener("DOMContentLoaded", () => {
       newBtn.addEventListener("click", async (e) => {
         e.stopPropagation(); // Prevent event bubbling
         const id = newBtn.dataset.id;
-        console.log("Button clicked for ID:", id);
         currentCustomerID = id;
         
         try {
           const res = await fetch(`../php/fetch_customer.php?id=${id}`);
           const cust = await res.json();
           
-          console.log("Customer data received:", cust); // Debug log
-
           if (!cust.error) {
             currentCustomerName = `${cust.FirstName} ${cust.LastName}`;
-            
-            // Debug the amount values
-            console.log("Amount values before formatting:", {
-              loanAmount: cust.LoanAmount,
-              totalAmount: cust.TotalAmount,
-              amountPaid: cust.AmountPaid,
-              balance: cust.Balance,
-              types: {
-                loan: typeof cust.LoanAmount,
-                total: typeof cust.TotalAmount,
-                paid: typeof cust.AmountPaid,
-                balance: typeof cust.Balance
-              }
-            });
             
             // Update modal content - Use raw numbers
             document.getElementById("cust-name").textContent = currentCustomerName;
@@ -285,23 +275,16 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("cust-phone").textContent = cust.PhoneNum || "---";
             document.getElementById("cust-address").textContent = cust.Address || "---";
             
-            // Format and display amounts - handle both raw numbers and formatted strings
+            // Format and display amounts
             document.getElementById("cust-amount").textContent = formatCurrency(cust.LoanAmount || cust.LoanAmountFormatted || 0);
             document.getElementById("cust-total").textContent = formatCurrency(cust.TotalAmount || cust.TotalAmountFormatted || 0);
             document.getElementById("cust-balance").textContent = formatCurrency(cust.Balance || cust.BalanceFormatted || 0);
             document.getElementById("cust-duedate").textContent = formatDate(cust.DueDate);
+            
+            // Display terms (just like in payments.js)
+            document.getElementById("cust-terms").textContent = cust.TermsText || "No terms available";
+            
             document.getElementById("cust-payment").textContent = formatCurrency(cust.AmountPaid || cust.AmountPaidFormatted || 0);
-            
-            // Show what was actually displayed
-            console.log("Displayed values:", {
-              amount: document.getElementById("cust-amount").textContent,
-              total: document.getElementById("cust-total").textContent,
-              balance: document.getElementById("cust-balance").textContent,
-              payment: document.getElementById("cust-payment").textContent
-            });
-            
-            // ALWAYS show delete button (collector-only system)
-            deleteBtn.style.display = "inline-block";
             
             // Clear any previous messages
             showMessage("");
@@ -330,50 +313,54 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Delete customer function - ALWAYS ENABLED for collectors
-  deleteBtn.addEventListener("click", async () => {
-    if (!currentCustomerID) {
-      showMessage("Please select a customer first.", "error");
-      return;
-    }
-
-    if (!confirm(`Are you sure you want to delete ${currentCustomerName}? This action cannot be undone.`)) {
-      showMessage("Deletion cancelled.", "info");
-      return;
-    }
-
-    const password = prompt(`Enter your password to confirm deletion of ${currentCustomerName}:`);
-    if (!password) {
-      showMessage("Deletion canceled. No password entered.", "error");
-      return;
-    }
-
-    try {
-      const res = await fetch("../php/delete-customer.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `id=${encodeURIComponent(currentCustomerID)}&password=${encodeURIComponent(password)}`
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        showMessage(data.message, "success");
-        setTimeout(() => {
-          closeModal();
-          loadRecords(); // Refresh the table
-        }, 1500);
-      } else {
-        showMessage(data.message, "error");
+  // Delete customer function - Only runs if user is admin
+  // Note: This won't exist for non-admin users since we removed the button
+  if (isAdminUser && deleteBtn) {
+    deleteBtn.addEventListener("click", async () => {
+      if (!currentCustomerID) {
+        showMessage("Please select a customer first.", "error");
+        return;
       }
-    } catch (error) {
-      showMessage("Failed to delete customer. Please try again.", "error");
-    }
-  });
+
+      if (!confirm(`Are you sure you want to delete ${currentCustomerName}? This action cannot be undone.`)) {
+        showMessage("Deletion cancelled.", "info");
+        return;
+      }
+
+      const password = prompt(`Enter your password to confirm deletion of ${currentCustomerName}:`);
+      if (!password) {
+        showMessage("Deletion canceled. No password entered.", "error");
+        return;
+      }
+
+      try {
+        const res = await fetch("../php/delete-customer.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `id=${encodeURIComponent(currentCustomerID)}&password=${encodeURIComponent(password)}`
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          showMessage(data.message, "success");
+          setTimeout(() => {
+            closeModal();
+            loadRecords(); // Refresh the table
+          }, 1500);
+        } else {
+          showMessage(data.message, "error");
+        }
+      } catch (error) {
+        showMessage("Failed to delete customer. Please try again.", "error");
+      }
+    });
+  }
 
   // Initialize everything
   function initialize() {
     console.log("Initializing check_rec.js");
+    console.log("Current user admin status:", isAdminUser);
     
     // Initialize filters
     initializeFilters();

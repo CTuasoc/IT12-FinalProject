@@ -19,23 +19,24 @@
     <div class="loading-text">Loading...</div>
   </div>
 </div>
+
 <header>
   <nav class="nav-bar">
-            <div class="nav-left">
-                <a href="../php/collector.php">
-                    <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
-                </a>
-            </div>
-            <div class="nav-right">
-                <div id="themeToggle" class="theme-toggle"></div>
-                <a href="../php/collector.php" class="home-btn">
-                    <span>HOME</span>
-                </a>
-            </div>
-        </nav>
+    <div class="nav-left">
+      <a href="../php/collector.php">
+        <img class="logo" src="../assets/logo-light.png" alt="Rean Ramz Lending Corp">
+      </a>
+    </div>
+    <div class="nav-right">
+      <div id="themeToggle" class="theme-toggle"></div>
+      <a href="../php/collector.php" class="home-btn">
+        <span>HOME</span>
+      </a>
+    </div>
+  </nav>
 </header>
 
-<main class="container">
+<main>
   <!-- Message area -->
   <div id="message" style="text-align:center; margin-bottom:1rem;"></div>
 
@@ -59,7 +60,9 @@
         </div>
         <div class="detail-box">
           <p>Phone Number</p>
-          <input type="text" name="phonenum" placeholder="Input Phone Num" required>
+          <input type="tel" name="phonenum" placeholder="09XX-XXX-XXXX" 
+                pattern="09[0-9]{2}-[0-9]{3}-[0-9]{4}" 
+                title="Format: 09XX-XXX-XXXX (11 digits)" required>
         </div>
         <div class="detail-box">
           <p>Address</p>
@@ -95,14 +98,17 @@
         </div>
       </div>
     </section>
+    
     <div class="btn">
       <button type="submit" class="add-btn">Add to Record</button>
       <p id="formMessage" style="margin-top:10px;"></p>
     </div>
   </form>
 </main>
+
 <script src="../js/add.js"></script>
 <script src="../js/dark_light_mode.js"></script>
 <script src="../js/loading.js"></script>
+<div id="notificationContainer"></div>
 </body>
 </html>

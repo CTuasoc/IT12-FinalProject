@@ -75,7 +75,21 @@
         </a>
       </div>
   </div>
-  <script src="../js/admin.js"></script>
+
+  <!-- Logout Confirmation Modal -->
+  <div id="logoutModal" class="logout-modal">
+    <div class="logout-modal-content">
+      <div class="logout-modal-icon">⚠️</div>
+      <h2>Confirm Logout</h2>
+      <p>Are you sure you want to log out?</p>
+      <div class="logout-modal-buttons">
+        <button class="logout-modal-btn cancel" id="cancelLogout">Cancel</button>
+        <button class="logout-modal-btn confirm" id="confirmLogout">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/logout.js"></script>
   <script src="../js/dark_light_mode.js"></script>
   <script src="../js/loading.js"></script>
 </body>

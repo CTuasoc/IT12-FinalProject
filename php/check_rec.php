@@ -8,7 +8,8 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Pass whether the user is admin (dept == 1)
+// Get user ID and admin status from session
+$userID = $_SESSION['user'];
 $isAdmin = ($_SESSION['dept'] == 1);
 
 // Determine home page based on department
@@ -27,8 +28,18 @@ $html = file_get_contents("../html/check_rec.html");
 // Replace placeholder with actual home page
 $html = str_replace('{{HOME_PAGE}}', $homePage, $html);
 
+// Conditionally include the delete button HTML
+$deleteButtonHtml = $isAdmin ? 
+    '<button class="delete-btn" id="deleteBtn">Delete Customer</button>' : 
+    '<!-- Delete button hidden for non-admin users -->';
+
+// Replace a placeholder in the HTML with the conditional button
+$html = str_replace('<!-- DELETE_BUTTON_PLACEHOLDER -->', $deleteButtonHtml, $html);
+
 echo $html;
 
-// Pass admin info to JavaScript
-echo "<script>const isAdmin = " . ($isAdmin ? 'true' : 'false') . ";</script>";
+// Pass admin status to JavaScript
+echo "<script>";
+echo "const isAdmin = " . ($isAdmin ? 'true' : 'false') . ";";
+echo "</script>";
 ?>
