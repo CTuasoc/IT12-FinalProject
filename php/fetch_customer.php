@@ -34,9 +34,10 @@ if ($row = $result->fetch_assoc()) {
     $loanAmount  = floatval($row["LoanAmount"]);
     $totalAmount = floatval($row["TotalAmount"]);
     $amountPaid  = floatval($row["AmountPaid"]);
+    $perDay      = floatval($row["PerDay"]);
     
     // Debug the raw float values
-    error_log("Parsed float values - LoanAmount: $loanAmount, TotalAmount: $totalAmount, AmountPaid: $amountPaid");
+    error_log("Parsed float values - LoanAmount: $loanAmount, TotalAmount: $totalAmount, AmountPaid: $amountPaid, PerDay: $perDay");
 
     // Ensure AmountPaid = 0 if no payments
     if ($amountPaid <= 0) {
@@ -45,6 +46,24 @@ if ($row = $result->fetch_assoc()) {
 
     // Compute balance safely
     $balance = $totalAmount - $amountPaid;
+
+    // Calculate terms
+    $totalTerms = 0;
+    $paidTerms = 0;
+    $remainingTerms = 0;
+    $termsText = "No terms available";
+    
+    if ($perDay > 0) {
+        $totalTerms = ceil($totalAmount / $perDay);
+        $paidTerms = floor($amountPaid / $perDay);
+        $remainingTerms = max(0, $totalTerms - $paidTerms);
+        
+        if ($remainingTerms > 0) {
+            $termsText = "$totalTerms days ($remainingTerms days remaining)";
+        } else {
+            $termsText = "$totalTerms days (Fully Paid)";
+        }
+    }
 
     // Return both formatted AND raw values for debugging
     $response = [
@@ -58,13 +77,18 @@ if ($row = $result->fetch_assoc()) {
         "TotalAmount" => $totalAmount, // Return as number
         "AmountPaid" => $amountPaid,  // Return as number
         "DueDate" => $row["DueDate"],
-        "PerDay" => $row["PerDay"],
+        "PerDay" => $perDay,
         "Balance" => max($balance, 0),
+        "TotalTerms" => $totalTerms,
+        "PaidTerms" => $paidTerms,
+        "RemainingTerms" => $remainingTerms,
+        "TermsText" => $termsText,
         // Also include formatted versions
         "LoanAmountFormatted" => number_format($loanAmount, 2),
         "TotalAmountFormatted" => number_format($totalAmount, 2),
         "AmountPaidFormatted" => number_format($amountPaid, 2),
-        "BalanceFormatted" => number_format(max($balance, 0), 2)
+        "BalanceFormatted" => number_format(max($balance, 0), 2),
+        "PerDayFormatted" => number_format($perDay, 2)
     ];
     
     echo json_encode($response);

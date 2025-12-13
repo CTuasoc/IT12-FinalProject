@@ -42,9 +42,8 @@ $id = intval($id);
 // $_SESSION['user'] contains EmpID (from login.php)
 $empID = $_SESSION['user'];
 
-// ---- 4. Verify collector password with bcrypt ----
-// Get employee by EmpID
-$query = $conn->prepare("SELECT PASSWORD FROM tblemployees WHERE EmpID = ?");
+// ---- 4. Verify collector is ADMIN (DeptID = 1) and password ----
+$query = $conn->prepare("SELECT PASSWORD, DeptID FROM tblemployees WHERE EmpID = ?");
 if (!$query) {
     echo json_encode([
         "success" => false, 
@@ -68,6 +67,17 @@ if ($result->num_rows === 0) {
 
 $row = $result->fetch_assoc();
 $hashedPassword = $row['PASSWORD'];
+$deptID = $row['DeptID'];
+
+// Check if user is admin (DeptID = 1)
+if ($deptID != 1) {
+    echo json_encode([
+        "success" => false, 
+        "message" => "Access denied. Only administrators can delete customer records."
+    ]);
+    $query->close();
+    exit();
+}
 
 // ---- 5. Compare passwords with bcrypt ----
 if (!password_verify($password, $hashedPassword)) {

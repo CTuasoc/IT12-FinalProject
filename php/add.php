@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../php/config.php");
+include("../php/validation.php"); // Include the validation helper
 
 if (!isset($_SESSION['user']) || $_SESSION['dept'] != 3) {
     header("Location: login.php");
@@ -35,11 +36,11 @@ if (isset($_GET['application_id'])) {
         
         if ($row = $result->fetch_assoc()) {
             $customerData['applicationid'] = $row['ApplicationID'];
-            $customerData['firstname'] = $row['FirstName'];
-            $customerData['lastname'] = $row['LastName'];
-            $customerData['businessname'] = $row['BusinessName'];
-            $customerData['address'] = $row['CustomerAddress'];
-            $customerData['phonenum'] = $row['PhoneNumber'];
+            $customerData['firstname'] = sanitizeInput($row['FirstName']);
+            $customerData['lastname'] = sanitizeInput($row['LastName']);
+            $customerData['businessname'] = sanitizeInput($row['BusinessName']);
+            $customerData['address'] = sanitizeInput($row['CustomerAddress']);
+            $customerData['phonenum'] = sanitizeInput($row['PhoneNumber']);
         }
         
         $stmt->close();
@@ -47,10 +48,10 @@ if (isset($_GET['application_id'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstName   = $_POST['firstname'] ?? '';
-    $lastName    = $_POST['lastname'] ?? '';
-    $business    = $_POST['businessname'] ?? '';
-    $address     = $_POST['address'] ?? '';
+    $firstName   = sanitizeInput($_POST['firstname'] ?? '');
+    $lastName    = sanitizeInput($_POST['lastname'] ?? '');
+    $business    = sanitizeInput($_POST['businessname'] ?? '');
+    $address     = sanitizeInput($_POST['address'] ?? '');
     $phone       = $_POST['phonenum'] ?? '';
     $loanAmount  = floatval($_POST['loanamount'] ?? 0);
     $dueDate     = $_POST['duedate'] ?? '';
@@ -58,9 +59,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $perDay      = floatval($_POST['perday'] ?? 0);
     $amountPaid  = 0.00;
 
+    // Validate phone number
+    $validatedPhone = validatePhoneNumber($phone);
+    if (!$validatedPhone) {
+        echo json_encode([
+            "success" => false, 
+            "message" => "Phone number must be exactly 11 digits and start with 09 (e.g., 09123456789)"
+        ]);
+        exit;
+    }
+
+    // Validate address
+    if (!validateAddress($address)) {
+        echo json_encode([
+            "success" => false, 
+            "message" => "Please enter a valid address (minimum 5 characters)"
+        ]);
+        exit;
+    }
+
     // Format the date safely
     if (!empty($dueDate)) {
-        $dueDate = date('Y-m-d', strtotime($dueDate)); // ensure correct MySQL format
+        $dueDate = date('Y-m-d', strtotime($dueDate));
     }
 
     if (empty($firstName) || empty($lastName) || empty($business) || $loanAmount <= 0 || empty($dueDate)) {
@@ -79,14 +99,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // ✅ Correct bind types — notice 'DueDate' is bound as 's'
     $stmt->bind_param(
         "sssssdssdd",
         $firstName,
         $lastName,
         $business,
         $address,
-        $phone,
+        $validatedPhone,
         $loanAmount,
         $amountPaid,
         $dueDate,
@@ -105,14 +124,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     // Render the HTML with customer data
     $html = file_get_contents("../html/add.html");
-    
-    // Replace placeholders with actual customer data
-    $html = str_replace('value=""', 'value="' . htmlspecialchars($customerData['firstname']) . '"', $html);
-    $html = str_replace('placeholder="Input First Name"', 'placeholder="Input First Name" value="' . htmlspecialchars($customerData['firstname']) . '"', $html);
-    $html = str_replace('placeholder="Input Last Name"', 'placeholder="Input Last Name" value="' . htmlspecialchars($customerData['lastname']) . '"', $html);
-    $html = str_replace('placeholder="Input Business Name"', 'placeholder="Input Business Name" value="' . htmlspecialchars($customerData['businessname']) . '"', $html);
-    $html = str_replace('placeholder="Input Phone Num"', 'placeholder="Input Phone Num" value="' . htmlspecialchars($customerData['phonenum']) . '"', $html);
-    $html = str_replace('placeholder="Input Address"', 'placeholder="Input Address" value="' . htmlspecialchars($customerData['address']) . '"', $html);
     
     // Pass customer data to JavaScript
     echo "<script>window.customerData = " . json_encode($customerData) . ";</script>";
