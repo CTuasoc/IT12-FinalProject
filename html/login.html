@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Crucial for mobile responsiveness -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rean Ramz Lending Corp</title>
     <link rel="stylesheet" href="../css/login.css">
     <link rel="icon" type="image/png" href="../assets/logo-dark.png">
@@ -11,23 +9,32 @@
 <body>
 
     <div class="login-box">
-        <img src="../assets/logo-dark.png" alt="Rean Ramz Lending Corp Logo" class="logo">
+        <img src="../assets/logo-dark.png" height="150" width="150" alt="logo">      
         <h2>Log In</h2>
 
         <form method="post" action="../php/login.php">
-            <label for="username">Email</label>
-            <input type="text" id="username" name="username" required autocomplete="username">
+            <label>Username</label>
+            <input type="text" id="username" name="username" required>
             
-            <label for="password">Password</label>
+            <label>Password</label>
             <div class="password-wrapper">
-                <input type="password" id="password" name="password" required autocomplete="current-password">
-                <img id="toggleEye" src="../assets/eye_crossed_out.png" class="eye-icon" alt="Toggle password visibility">
+                <input type="password" id="password" name="password" required>
+                <img
+                    id="toggleEye"
+                    src="../assets/eye_crossed_out.png"
+                    class="eye-icon"
+                    alt="Toggle password"
+                >
             </div>
             
             <button type="submit">Log In</button>
         </form>
-        <p id="error-message" style="color:red; display:none;">Invalid username or password.</p>
+
+        <p id="error-message" style="color:red; display:none;">
+            Invalid username or password.
+        </p>
     </div>
+
     <script src="../js/login.js"></script>
 </body>
 </html>

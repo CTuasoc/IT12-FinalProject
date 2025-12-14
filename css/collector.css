@@ -292,6 +292,11 @@ body.dark-mode .logo {
   hyphens: auto;
 }
 
+.daily-collection{
+  margin: 10px 0;
+  color: var(--text-color);
+}
+
 /* ========= RESPONSIVE DESIGN ========= */
 
 /* --- Tablets (max-width: 1024px) --- */
